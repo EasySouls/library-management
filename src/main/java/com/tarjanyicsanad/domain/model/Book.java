@@ -3,7 +3,8 @@ package com.tarjanyicsanad.domain.model;
 import java.time.LocalDate;
 
 public record Book(
-        String name,
+        int id,
+        String title,
         String description,
         String author,
         LocalDate publishingDate

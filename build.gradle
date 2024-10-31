@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.tarjanyicsanad'
@@ -11,14 +10,25 @@ repositories {
 }
 
 dependencies {
+    // Hibernate
+    implementation 'org.hibernate.orm:hibernate-core:6.6.1.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.6.1.Final'
+
+    // PostgreSQL
+    implementation 'org.postgresql:postgresql:42.7.2'
+
+    // H2 database
+    runtimeOnly 'com.h2database:h2:2.2.220'
+
+    // Logging
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 test {
     useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
 }
