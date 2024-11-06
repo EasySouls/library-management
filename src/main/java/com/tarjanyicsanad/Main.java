@@ -1,6 +1,6 @@
 package com.tarjanyicsanad;
 
-import com.tarjanyicsanad.data.entities.BookEntity;
+import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.ui.ApplicationFrame;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

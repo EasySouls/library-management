@@ -1,5 +1,7 @@
 package com.tarjanyicsanad.domain.model;
 
+import com.tarjanyicsanad.data.books.entities.BookEntity;
+
 import java.time.LocalDate;
 
 public record Book(
@@ -9,5 +11,11 @@ public record Book(
         String author,
         LocalDate publishingDate
 ) {
+    public BookEntity toEntity() {
+        return new BookEntity(id, title, description, author);
+    }
 
+    public static Book fromEntity(BookEntity entity) {
+        return new Book(entity.getId(), entity.getTitle(), entity.getDescription(), entity.getAuthor(), null);
+    }
 }

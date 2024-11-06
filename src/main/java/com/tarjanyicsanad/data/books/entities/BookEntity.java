@@ -1,4 +1,4 @@
-package com.tarjanyicsanad.data.entities;
+package com.tarjanyicsanad.data.books.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -24,5 +24,21 @@ public class BookEntity {
         this.title = title;
         this.description = description;
         this.author = author;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public @NotNull String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public @NotNull String getAuthor() {
+        return author;
     }
 }
