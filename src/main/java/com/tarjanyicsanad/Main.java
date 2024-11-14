@@ -5,6 +5,8 @@ import com.tarjanyicsanad.ui.ApplicationFrame;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.swing.*;
+
 import static org.hibernate.cfg.JdbcSettings.*;
 
 public class Main {
@@ -29,7 +31,10 @@ public class Main {
             session.persist(book);
         });
 
-        ApplicationFrame applicationFrame = new ApplicationFrame("Library Management", 1600, 900);
+        SwingUtilities.invokeLater(() -> {
+            ApplicationFrame applicationFrame = new ApplicationFrame("Library Management", 1600, 900);
+            applicationFrame.show();
+        });
 
         sessionFactory.close();
     }
