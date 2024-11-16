@@ -3,15 +3,18 @@ package com.tarjanyicsanad.ui;
 import com.tarjanyicsanad.di.DaggerRepositoryFactory;
 import com.tarjanyicsanad.di.RepositoryFactory;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.ui.books.BooksScreen;
 import com.tarjanyicsanad.ui.books.BooksTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 
 public class ApplicationFrame {
     private final JFrame frame;
 
-    private final MenuBar menuBar;
+//    private final JPanel screens;
+//    private final CardLayout screensLayout;
 
     private final BookRepository bookRepository;
     private final BooksTableModel booksTableModel;
@@ -22,19 +25,22 @@ public class ApplicationFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(width, height);
 
-        menuBar = new MenuBar();
-        frame.setJMenuBar(menuBar);
-
         RepositoryFactory repositoryFactory = DaggerRepositoryFactory.create();
         bookRepository = repositoryFactory.bookRepository();
         booksTableModel = new BooksTableModel(bookRepository);
 
-        JTable booksTable = new JTable();
-        booksTable.setModel(booksTableModel);
-        booksTable.setFillsViewportHeight(true);
-        booksTable.setRowSorter(new TableRowSorter<>(booksTableModel));
-        System.out.printf("Starting books row count: %d", booksTableModel.getRowCount());
-        frame.add(new JScrollPane(booksTable));
+//        screensLayout = new CardLayout();
+////        screensLayout.addLayoutComponent(new BooksScreen(booksTableModel), Screens.BOOKS);
+//        screens = new JPanel(screensLayout);
+//        screens.add(new BooksScreen(booksTableModel), Screens.BOOKS);
+//
+//        frame.setJMenuBar(new MenuBar(layout -> screensLayout.show(screens, layout)));
+//        frame.add(screens);
+
+
+        frame.add(new BooksScreen(booksTableModel), BorderLayout.CENTER);
+
+        /// Handle reading saved books from file
     }
 
     public void show() {

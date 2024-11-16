@@ -10,7 +10,9 @@ import javax.swing.*;
 import static org.hibernate.cfg.JdbcSettings.*;
 
 public class Main {
+
     public static void main(String[] args) {
+        boolean showSql = false;
         SessionFactory sessionFactory = new Configuration()
                 .addAnnotatedClass(BookEntity.class)
                 // use H2 in-memory database
@@ -18,9 +20,9 @@ public class Main {
                 .setProperty(JAKARTA_JDBC_USER, "sa")
                 .setProperty(JAKARTA_JDBC_PASSWORD, "")
                 // display SQL in console
-                .setProperty(SHOW_SQL, true)
-                .setProperty(FORMAT_SQL, true)
-                .setProperty(HIGHLIGHT_SQL, true)
+                .setProperty(SHOW_SQL, showSql)
+                .setProperty(FORMAT_SQL, showSql)
+                .setProperty(HIGHLIGHT_SQL, showSql)
                 .buildSessionFactory();
 
         // export the inferred database schema
