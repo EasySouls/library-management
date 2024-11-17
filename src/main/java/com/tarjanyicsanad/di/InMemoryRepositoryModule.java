@@ -1,7 +1,6 @@
 package com.tarjanyicsanad.di;
 
 import com.tarjanyicsanad.data.authors.InMemoryAuthorRepository;
-import com.tarjanyicsanad.data.books.DatabaseBookRepository;
 import com.tarjanyicsanad.data.books.InMemoryBookRepository;
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
@@ -11,16 +10,19 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
+import javax.inject.Singleton;
 import java.time.LocalDate;
 import java.util.List;
 
 @Module
-abstract class RepositoryModule {
+abstract class InMemoryRepositoryModule {
 
     @Binds
-    abstract BookRepository bindBookRepository(DatabaseBookRepository inMemoryBookRepository);
+    @Singleton
+    abstract BookRepository provideBookRepository(InMemoryBookRepository inMemoryBookRepository);
 
     @Binds
+    @Singleton
     abstract AuthorRepository bindAuthorRepository(InMemoryAuthorRepository inMemoryAuthorRepository);
 
     @Provides

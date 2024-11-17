@@ -15,13 +15,8 @@ import java.awt.*;
 public class ApplicationFrame {
     private JFrame frame;
 
-    private JPanel screens;
-    private CardLayout screensLayout;
-
-    private BookRepository bookRepository;
-    private BooksTableModel booksTableModel;
-    private AuthorRepository authorRepository;
-    private AuthorsTableModel authorsTableModel;
+    private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
     public ApplicationFrame(String title, int width, int height) {
         /// Handle dependency injection
@@ -43,14 +38,14 @@ public class ApplicationFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(width, height);
 
-        booksTableModel = new BooksTableModel(bookRepository);
-        authorsTableModel = new AuthorsTableModel(authorRepository);
+        BooksTableModel booksTableModel = new BooksTableModel(bookRepository);
+        AuthorsTableModel authorsTableModel = new AuthorsTableModel(authorRepository);
 
-        screensLayout = new CardLayout();
+        CardLayout screensLayout = new CardLayout();
         screensLayout.addLayoutComponent(new BooksScreen(booksTableModel), Screens.BOOKS);
         screensLayout.addLayoutComponent(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
 
-        screens = new JPanel(screensLayout);
+        JPanel screens = new JPanel(screensLayout);
         screens.add(new BooksScreen(booksTableModel), Screens.BOOKS);
         screens.add(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
 

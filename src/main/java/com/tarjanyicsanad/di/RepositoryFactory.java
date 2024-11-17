@@ -6,7 +6,11 @@ import dagger.Component;
 
 import javax.inject.Singleton;
 
-@Component(modules = {RepositoryModule.class, DatabaseModule.class})
+@Component(modules = {
+        InMemoryRepositoryModule.class,
+//        DatabaseRepositoryModule.class,
+//        DatabaseModule.class
+})
 @Singleton
 public interface RepositoryFactory {
     BookRepository bookRepository();
