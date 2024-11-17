@@ -5,6 +5,7 @@ import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.domain.model.Book;
 import org.hibernate.SessionFactory;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class DatabaseBookRepository implements BookRepository {
     private final SessionFactory sessionFactory;
 
+    @Inject
     public DatabaseBookRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

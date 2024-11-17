@@ -1,6 +1,7 @@
 package com.tarjanyicsanad.di;
 
 import com.tarjanyicsanad.data.authors.InMemoryAuthorRepository;
+import com.tarjanyicsanad.data.books.DatabaseBookRepository;
 import com.tarjanyicsanad.data.books.InMemoryBookRepository;
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
@@ -17,7 +18,7 @@ import java.util.List;
 abstract class RepositoryModule {
 
     @Binds
-    abstract BookRepository bindBookRepository(InMemoryBookRepository inMemoryBookRepository);
+    abstract BookRepository bindBookRepository(DatabaseBookRepository inMemoryBookRepository);
 
     @Binds
     abstract AuthorRepository bindAuthorRepository(InMemoryAuthorRepository inMemoryAuthorRepository);

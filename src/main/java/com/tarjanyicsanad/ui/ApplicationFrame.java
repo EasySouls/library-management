@@ -13,28 +13,37 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ApplicationFrame {
-    private final JFrame frame;
+    private JFrame frame;
 
-    private final JPanel screens;
-    private final CardLayout screensLayout;
+    private JPanel screens;
+    private CardLayout screensLayout;
 
-    private final BookRepository bookRepository;
-    private final BooksTableModel booksTableModel;
-    private final AuthorRepository authorRepository;
-    private final AuthorsTableModel authorsTableModel;
+    private BookRepository bookRepository;
+    private BooksTableModel booksTableModel;
+    private AuthorRepository authorRepository;
+    private AuthorsTableModel authorsTableModel;
 
     public ApplicationFrame(String title, int width, int height) {
-        frame = new JFrame(title);
+        /// Handle dependency injection
+        RepositoryFactory repositoryFactory = DaggerRepositoryFactory.create();
+        bookRepository = repositoryFactory.bookRepository();
+        authorRepository = repositoryFactory.authorRepository();
+
+        /// Handle reading saved data if it is enabled
+
+        initComponents(title, width, height);
+    }
+
+    public void show() {
         frame.setVisible(true);
+    }
+
+    private void initComponents(String title, int width, int height) {
+        frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(width, height);
 
-        RepositoryFactory repositoryFactory = DaggerRepositoryFactory.create();
-
-        bookRepository = repositoryFactory.bookRepository();
         booksTableModel = new BooksTableModel(bookRepository);
-
-        authorRepository = repositoryFactory.authorRepository();
         authorsTableModel = new AuthorsTableModel(authorRepository);
 
         screensLayout = new CardLayout();
@@ -47,11 +56,5 @@ public class ApplicationFrame {
 
         frame.setJMenuBar(new MenuBar(layout -> screensLayout.show(screens, layout)));
         frame.add(screens);
-
-        /// Handle reading saved books from file
-    }
-
-    public void show() {
-        frame.setVisible(true);
     }
 }
