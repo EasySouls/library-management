@@ -5,6 +5,7 @@ import com.tarjanyicsanad.domain.repository.BookRepository;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryBookRepository implements BookRepository {
     private final List<Book> books;
@@ -25,11 +26,10 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
-    public Book getBook(int id) {
+    public Optional<Book> getBook(int id) {
         return books.stream()
                 .filter(book -> book.id() == id)
-                .findFirst()
-                .orElseThrow();
+                .findFirst();
     }
 
     @Override

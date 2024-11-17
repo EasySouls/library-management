@@ -1,4 +1,4 @@
-package com.tarjanyicsanad.data.books.entities;
+package com.tarjanyicsanad.data.authors.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

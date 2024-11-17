@@ -5,6 +5,7 @@ import com.tarjanyicsanad.domain.repository.BookRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class BooksTableModel extends AbstractTableModel {
 
@@ -27,12 +28,16 @@ public class BooksTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         // TODO: This only works if they are sorted by id
-        Book student = bookRepository.getBook(rowIndex);
+        Optional<Book> bookOpt = bookRepository.getBook(rowIndex);
+        if (bookOpt.isEmpty()) {
+            return null;
+        }
+        Book book = bookOpt.get();
         return switch (columnIndex) {
-            case 0 -> student.title();
-            case 1 -> student.description();
-            case 2 -> student.author();
-            default -> student.publishingDate();
+            case 0 -> book.title();
+            case 1 -> book.description();
+            case 2 -> book.author();
+            default -> book.publishingDate();
         };
     }
 

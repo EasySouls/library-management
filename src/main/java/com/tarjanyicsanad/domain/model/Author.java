@@ -1,6 +1,6 @@
 package com.tarjanyicsanad.domain.model;
 
-import com.tarjanyicsanad.data.books.entities.AuthorEntity;
+import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
 
 import java.time.LocalDate;
 

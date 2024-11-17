@@ -2,7 +2,10 @@ package com.tarjanyicsanad.ui;
 
 import com.tarjanyicsanad.di.DaggerRepositoryFactory;
 import com.tarjanyicsanad.di.RepositoryFactory;
+import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.ui.authors.AuthorsScreen;
+import com.tarjanyicsanad.ui.authors.AuthorsTableModel;
 import com.tarjanyicsanad.ui.books.BooksScreen;
 import com.tarjanyicsanad.ui.books.BooksTableModel;
 
@@ -17,6 +20,8 @@ public class ApplicationFrame {
 
     private final BookRepository bookRepository;
     private final BooksTableModel booksTableModel;
+    private final AuthorRepository authorRepository;
+    private final AuthorsTableModel authorsTableModel;
 
     public ApplicationFrame(String title, int width, int height) {
         frame = new JFrame(title);
@@ -25,19 +30,23 @@ public class ApplicationFrame {
         frame.setSize(width, height);
 
         RepositoryFactory repositoryFactory = DaggerRepositoryFactory.create();
+
         bookRepository = repositoryFactory.bookRepository();
         booksTableModel = new BooksTableModel(bookRepository);
 
+        authorRepository = repositoryFactory.authorRepository();
+        authorsTableModel = new AuthorsTableModel(authorRepository);
+
         screensLayout = new CardLayout();
         screensLayout.addLayoutComponent(new BooksScreen(booksTableModel), Screens.BOOKS);
+        screensLayout.addLayoutComponent(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
+
         screens = new JPanel(screensLayout);
         screens.add(new BooksScreen(booksTableModel), Screens.BOOKS);
+        screens.add(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
 
         frame.setJMenuBar(new MenuBar(layout -> screensLayout.show(screens, layout)));
         frame.add(screens);
-
-
-//        frame.add(new BooksScreen(booksTableModel), BorderLayout.CENTER);
 
         /// Handle reading saved books from file
     }

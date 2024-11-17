@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DatabaseBookRepository implements BookRepository {
@@ -33,12 +34,12 @@ public class DatabaseBookRepository implements BookRepository {
     }
 
     @Override
-    public Book getBook(int id) {
+    public Optional<Book> getBook(int id) {
         AtomicReference<BookEntity> bookEntity = new AtomicReference<>();
         sessionFactory.inTransaction(session ->
             bookEntity.set(session.find(BookEntity.class, id))
         );
-        return Book.fromEntity(bookEntity.get());
+        return Optional.ofNullable(bookEntity.get()).map(Book::fromEntity);
     }
 
     @Override
