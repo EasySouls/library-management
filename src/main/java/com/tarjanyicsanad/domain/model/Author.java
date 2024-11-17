@@ -2,6 +2,7 @@ package com.tarjanyicsanad.domain.model;
 
 import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public record Author(
@@ -9,7 +10,7 @@ public record Author(
         String firstName,
         String lastName,
         LocalDate dateOfBirth
-) {
+) implements Serializable {
     public String fullName() {
         return firstName + " " + lastName;
     }

@@ -2,6 +2,7 @@ package com.tarjanyicsanad.domain.model;
 
 import com.tarjanyicsanad.data.books.entities.BookEntity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public record Book(
@@ -10,7 +11,7 @@ public record Book(
         String description,
         String author,
         LocalDate publishingDate
-) {
+) implements Serializable {
     public BookEntity toEntity() {
         return new BookEntity(id, title, description, author);
     }

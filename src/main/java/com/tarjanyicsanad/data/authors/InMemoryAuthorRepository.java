@@ -48,4 +48,12 @@ public class InMemoryAuthorRepository implements AuthorRepository {
         removeAuthor(author.id());
         addAuthor(author);
     }
+
+    public void clear() {
+        authors.clear();
+    }
+
+    public void addAll(List<Author> authors) {
+        this.authors.addAll(authors);
+    }
 }
