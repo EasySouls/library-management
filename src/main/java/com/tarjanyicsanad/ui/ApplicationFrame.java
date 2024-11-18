@@ -45,6 +45,7 @@ public class ApplicationFrame {
 
         initComponents(title, width, height);
 
+        /// If the user wants to save the data to the file, it will be saved when the window is closed
         if (UserSettings.getSaveToFile()) {
             frame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -74,10 +75,21 @@ public class ApplicationFrame {
         screens.add(new BooksScreen(bookRepository), Screens.BOOKS);
         screens.add(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
 
-        frame.setJMenuBar(new MenuBar(layout -> screensLayout.show(screens, layout)));
+
+        frame.setJMenuBar(new MenuBar(
+                layout -> screensLayout.show(screens, layout),
+                this::saveToFile,
+                () -> {
+                    readFromFile();
+                    authorsTableModel.fireTableDataChanged();
+                }
+        ));
         frame.add(screens);
     }
 
+    /**
+     * Reads the data from the files and adds it to the repositories
+     */
     private void readFromFile() {
         try(ObjectInputStream bookStream = new ObjectInputStream(getClass().getResourceAsStream("books.dat"));
             ObjectInputStream authorStream = new ObjectInputStream(getClass().getResourceAsStream("authors.dat"))) {
@@ -97,6 +109,9 @@ public class ApplicationFrame {
         }
     }
 
+    /**
+     * Saves the data inside the repositories to the files
+     */
     private void saveToFile() {
         try(ObjectOutputStream bookStream = new ObjectOutputStream(new FileOutputStream("books.dat"));
             ObjectOutputStream authorStream = new ObjectOutputStream(new FileOutputStream("authors.dat"))) {

@@ -27,7 +27,6 @@ public class BooksTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        // TODO: This only works if they are sorted by id
         Optional<Book> bookOpt = bookRepository.getBook(rowIndex);
         if (bookOpt.isEmpty()) {
             return null;
