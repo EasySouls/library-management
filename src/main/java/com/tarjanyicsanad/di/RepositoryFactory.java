@@ -2,6 +2,7 @@ package com.tarjanyicsanad.di;
 
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.MemberRepository;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -15,4 +16,5 @@ import javax.inject.Singleton;
 public interface RepositoryFactory {
     BookRepository bookRepository();
     AuthorRepository authorRepository();
+    MemberRepository memberRepository();
 }

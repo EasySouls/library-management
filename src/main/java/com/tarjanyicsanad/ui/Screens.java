@@ -5,6 +5,7 @@ public class Screens {
 
     public static final String BOOKS = "Könyvek";
     public static final String AUTHORS = "Szerzők";
+    public static final String MEMBERS = "Tagok";
     public static final String ADD_BOOK = "Könyv hozzáadása";
     public static final String EDIT_BOOK = "Könyv szerkesztése";
 }

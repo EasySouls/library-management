@@ -5,17 +5,25 @@ import javax.swing.*;
 public class MenuBar extends JMenuBar {
 
     public MenuBar(LayoutChanger layoutChanger, Runnable saveAction, Runnable loadAction) {
+        String listString = "Listázás";
+
         JMenu booksMenu = new JMenu(Screens.BOOKS);
-        JMenuItem listBooksMenuItem = new JMenuItem("Listázás");
+        JMenuItem listBooksMenuItem = new JMenuItem(listString);
         listBooksMenuItem.addActionListener(e -> layoutChanger.changeLayout(Screens.BOOKS));
         booksMenu.add(listBooksMenuItem);
         this.add(booksMenu);
 
         JMenu authorsMenu = new JMenu(Screens.AUTHORS);
-        JMenuItem listAuthorsMenuItem = new JMenuItem("Listázás");
+        JMenuItem listAuthorsMenuItem = new JMenuItem(listString);
         listAuthorsMenuItem.addActionListener(e -> layoutChanger.changeLayout(Screens.AUTHORS));
         authorsMenu.add(listAuthorsMenuItem);
         this.add(authorsMenu);
+
+        JMenu membersMenu = new JMenu(Screens.MEMBERS);
+        JMenuItem listMembersMenuItem = new JMenuItem(listString);
+        listMembersMenuItem.addActionListener(e -> layoutChanger.changeLayout(Screens.MEMBERS));
+        membersMenu.add(listMembersMenuItem);
+        this.add(membersMenu);
 
         JMenu fileMenu = new JMenu("Fájl");
         JMenuItem saveMenuItem = new JMenuItem("Mentés");

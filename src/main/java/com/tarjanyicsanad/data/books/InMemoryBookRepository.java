@@ -1,5 +1,8 @@
 package com.tarjanyicsanad.data.books;
 
+import com.tarjanyicsanad.domain.exceptions.AuthorNotFoundException;
+import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
+import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 
@@ -22,7 +25,10 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public void removeBook(int id) {
-        books.removeIf(book -> book.id() == id);
+        boolean success = books.removeIf(book -> book.id() == id);
+        if (!success) {
+            throw new BookNotFoundException("Book with id " + id + " not found");
+        }
     }
 
     @Override

@@ -7,10 +7,12 @@ import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.MemberRepository;
 import com.tarjanyicsanad.ui.authors.AuthorsScreen;
 import com.tarjanyicsanad.ui.authors.AuthorsTableModel;
 import com.tarjanyicsanad.ui.books.BooksScreen;
 import com.tarjanyicsanad.ui.books.BooksTableModel;
+import com.tarjanyicsanad.ui.members.MembersScreen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +30,7 @@ public class ApplicationFrame {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final MemberRepository memberRepository;
 
     private static Logger logger = LogManager.getLogger(ApplicationFrame.class);
 
@@ -36,6 +39,7 @@ public class ApplicationFrame {
         RepositoryFactory repositoryFactory = DaggerRepositoryFactory.create();
         bookRepository = repositoryFactory.bookRepository();
         authorRepository = repositoryFactory.authorRepository();
+        memberRepository = repositoryFactory.memberRepository();
 
         /// If the user wants to load the data from the file,
         /// and the preferred storage mode is not database, then load it
@@ -70,6 +74,7 @@ public class ApplicationFrame {
         CardLayout screensLayout = new CardLayout();
         screensLayout.addLayoutComponent(new BooksScreen(bookRepository), Screens.BOOKS);
         screensLayout.addLayoutComponent(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
+        screensLayout.addLayoutComponent(new MembersScreen(memberRepository), Screens.MEMBERS);
 
         JPanel screens = new JPanel(screensLayout);
         screens.add(new BooksScreen(bookRepository), Screens.BOOKS);

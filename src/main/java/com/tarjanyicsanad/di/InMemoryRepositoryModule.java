@@ -2,10 +2,13 @@ package com.tarjanyicsanad.di;
 
 import com.tarjanyicsanad.data.authors.InMemoryAuthorRepository;
 import com.tarjanyicsanad.data.books.InMemoryBookRepository;
+import com.tarjanyicsanad.data.members.InMemoryMemberRepository;
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.MemberRepository;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -19,11 +22,15 @@ abstract class InMemoryRepositoryModule {
 
     @Binds
     @Singleton
-    abstract BookRepository provideBookRepository(InMemoryBookRepository inMemoryBookRepository);
+    abstract BookRepository bindBookRepository(InMemoryBookRepository inMemoryBookRepository);
 
     @Binds
     @Singleton
     abstract AuthorRepository bindAuthorRepository(InMemoryAuthorRepository inMemoryAuthorRepository);
+
+    @Binds
+    @Singleton
+    abstract MemberRepository bindMemberRepository(InMemoryMemberRepository inMemoryMemberRepository);
 
     @Provides
     static List<Book> provideTestBooks() {
@@ -40,6 +47,15 @@ abstract class InMemoryRepositoryModule {
                 new Author(0, "James", "King", LocalDate.of(1990, 1, 1)),
                 new Author(1, "Charles", "Brown", LocalDate.of(1991, 2, 2)),
                 new Author(2, "Elizabeth", "Marley", LocalDate.of(1992, 3, 3))
+        );
+    }
+
+    @Provides
+    static List<Member> provideTestMembers() {
+        return List.of(
+                new Member(0, "John", "Doe", LocalDate.of(1990, 1, 1)),
+                new Member(1, "Jane", "Doe", LocalDate.of(1991, 2, 2)),
+                new Member(2, "Alice", "Smith", LocalDate.of(1992, 3, 3))
         );
     }
 }
