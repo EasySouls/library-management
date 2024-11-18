@@ -1,6 +1,5 @@
 package com.tarjanyicsanad.ui;
 
-import com.tarjanyicsanad.data.books.InMemoryBookRepository;
 import com.tarjanyicsanad.data.settings.UserSettings;
 import com.tarjanyicsanad.di.DaggerRepositoryFactory;
 import com.tarjanyicsanad.di.RepositoryFactory;
@@ -65,15 +64,14 @@ public class ApplicationFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(width, height);
 
-        BooksTableModel booksTableModel = new BooksTableModel(bookRepository);
         AuthorsTableModel authorsTableModel = new AuthorsTableModel(authorRepository);
 
         CardLayout screensLayout = new CardLayout();
-        screensLayout.addLayoutComponent(new BooksScreen(booksTableModel), Screens.BOOKS);
+        screensLayout.addLayoutComponent(new BooksScreen(bookRepository), Screens.BOOKS);
         screensLayout.addLayoutComponent(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
 
         JPanel screens = new JPanel(screensLayout);
-        screens.add(new BooksScreen(booksTableModel), Screens.BOOKS);
+        screens.add(new BooksScreen(bookRepository), Screens.BOOKS);
         screens.add(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
 
         frame.setJMenuBar(new MenuBar(layout -> screensLayout.show(screens, layout)));
