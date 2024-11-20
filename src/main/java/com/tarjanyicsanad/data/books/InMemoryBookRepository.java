@@ -1,21 +1,20 @@
 package com.tarjanyicsanad.data.books;
 
-import com.tarjanyicsanad.domain.exceptions.AuthorNotFoundException;
 import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
-import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InMemoryBookRepository implements BookRepository {
-    private final List<Book> books;
+    private final ArrayList<Book> books;
 
     @Inject
     public InMemoryBookRepository(List<Book> books) {
-        this.books = books;
+        this.books = books.isEmpty() ? new ArrayList<>() : new ArrayList<>(books);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public List<Book> findAll() {
-        return List.copyOf(books);
+        return books;
     }
 
     @Override

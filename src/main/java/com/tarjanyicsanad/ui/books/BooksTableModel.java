@@ -15,6 +15,11 @@ public class BooksTableModel extends AbstractTableModel {
         this.bookRepository = bookRepository;
     }
 
+    public void removeBook(int id) {
+        bookRepository.removeBook(id);
+        fireTableDataChanged();
+    }
+
     @Override
     public int getRowCount() {
         return bookRepository.findAll().size();
@@ -27,7 +32,7 @@ public class BooksTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Optional<Book> bookOpt = bookRepository.getBook(rowIndex);
+        Optional<Book> bookOpt = Optional.ofNullable(bookRepository.findAll().get(rowIndex));
         if (bookOpt.isEmpty()) {
             return null;
         }

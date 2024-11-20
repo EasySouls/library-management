@@ -27,7 +27,7 @@ public class BooksScreen extends JPanel {
 
         add(new JScrollPane(booksTable));
 
-        BookSidePanel sidePanel = new BookSidePanel();
+        BookSidePanel sidePanel = new BookSidePanel(book -> tableModel.removeBook(book.id()));
         add(sidePanel, BorderLayout.EAST);
 
         booksTable.addMouseListener(new MouseAdapter() {
