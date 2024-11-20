@@ -13,6 +13,11 @@ public class AuthorsTableModel extends AbstractTableModel {
         this.authorRepository = authorRepository;
     }
 
+    public void removeAuthor(int id) {
+        authorRepository.removeAuthor(id);
+        fireTableDataChanged();
+    }
+
     @Override
     public int getRowCount() {
         return authorRepository.findAll().size();

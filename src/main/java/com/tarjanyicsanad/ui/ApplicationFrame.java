@@ -73,12 +73,12 @@ public class ApplicationFrame {
 
         CardLayout screensLayout = new CardLayout();
         screensLayout.addLayoutComponent(new BooksScreen(bookRepository), Screens.BOOKS);
-        screensLayout.addLayoutComponent(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
+        screensLayout.addLayoutComponent(new AuthorsScreen(authorRepository), Screens.AUTHORS);
         screensLayout.addLayoutComponent(new MembersScreen(memberRepository), Screens.MEMBERS);
 
         JPanel screens = new JPanel(screensLayout);
         screens.add(new BooksScreen(bookRepository), Screens.BOOKS);
-        screens.add(new AuthorsScreen(authorsTableModel), Screens.AUTHORS);
+        screens.add(new AuthorsScreen(authorRepository), Screens.AUTHORS);
 
 
         frame.setJMenuBar(new MenuBar(
@@ -95,6 +95,7 @@ public class ApplicationFrame {
     /**
      * Reads the data from the files and adds it to the repositories
      */
+    @SuppressWarnings("unchecked")
     private void readFromFile() {
         try(ObjectInputStream bookStream = new ObjectInputStream(getClass().getResourceAsStream("books.dat"));
             ObjectInputStream authorStream = new ObjectInputStream(getClass().getResourceAsStream("authors.dat"))) {

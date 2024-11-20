@@ -5,15 +5,16 @@ import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InMemoryAuthorRepository implements AuthorRepository {
-    private final List<Author> authors;
+    private final ArrayList<Author> authors;
 
     @Inject
     public InMemoryAuthorRepository(List<Author> authors) {
-        this.authors = authors;
+        this.authors = authors.isEmpty() ? new ArrayList<>() : new ArrayList<>(authors);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class InMemoryAuthorRepository implements AuthorRepository {
 
     @Override
     public List<Author> findAll() {
-        return List.copyOf(authors);
+        return authors;
     }
 
     @Override
