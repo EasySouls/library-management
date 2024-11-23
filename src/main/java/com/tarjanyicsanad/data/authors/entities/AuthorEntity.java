@@ -30,8 +30,7 @@ public class AuthorEntity {
 
     public AuthorEntity() {}
 
-    public AuthorEntity(Integer id, String firstName, String lastName, LocalDate birthDate, Collection<BookEntity> books) {
-        this.id = id;
+    public AuthorEntity(String firstName, String lastName, LocalDate birthDate, Collection<BookEntity> books) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;

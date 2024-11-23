@@ -20,7 +20,7 @@ public record Book(
         Collection<LoanEntity> loanEntities = loans.stream()
                 .map(Loan::toEntity)
                 .collect(Collectors.toSet());
-        return new BookEntity(id, title, description, author.toEntity(), loanEntities, publishingDate);
+        return new BookEntity(title, description, author.toEntity(), loanEntities, publishingDate);
     }
 
     public static Book fromEntity(BookEntity entity) {

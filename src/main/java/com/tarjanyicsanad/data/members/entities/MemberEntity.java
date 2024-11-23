@@ -29,8 +29,7 @@ public class MemberEntity {
 
     public MemberEntity() {}
 
-    public MemberEntity(Integer id, String name, String email, LocalDate joinedAt) {
-        this.id = id;
+    public MemberEntity(String name, String email, LocalDate joinedAt) {
         this.name = name;
         this.email = email;
         this.joinedAt = joinedAt;

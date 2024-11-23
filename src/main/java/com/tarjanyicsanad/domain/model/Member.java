@@ -13,7 +13,7 @@ public record Member(
 ) implements Serializable {
 
     public MemberEntity toEntity() {
-        return new MemberEntity(id, name, email, joinedAt);
+        return new MemberEntity(name, email, joinedAt);
     }
 
     public static Member fromEntity(MemberEntity entity) {

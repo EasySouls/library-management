@@ -26,7 +26,7 @@ public record Author(
         Collection<BookEntity> bookEntities = books.stream()
                 .map(Book::toEntity)
                 .toList();
-        return new AuthorEntity(id, firstName, lastName, dateOfBirth, bookEntities);
+        return new AuthorEntity(firstName, lastName, dateOfBirth, bookEntities);
     }
 
     public static Author fromEntity(AuthorEntity entity) {

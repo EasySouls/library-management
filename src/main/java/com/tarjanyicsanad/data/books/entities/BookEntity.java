@@ -15,7 +15,7 @@ public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Basic(optional = false)
     private String title;
@@ -23,7 +23,7 @@ public class BookEntity {
     @Basic(optional = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
@@ -35,13 +35,11 @@ public class BookEntity {
 
     public BookEntity() {}
 
-    public BookEntity(int id,
-                      String title,
+    public BookEntity(String title,
                       String description,
                       AuthorEntity author,
                       Collection<LoanEntity> loans,
                       LocalDate publishingDate) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.author = author;

@@ -31,8 +31,7 @@ public class LoanEntity {
 
     public LoanEntity() {}
 
-    public LoanEntity(Integer id, BookEntity book, MemberEntity member, LocalDate loanedAt, LocalDate returnDate) {
-        this.id = id;
+    public LoanEntity(BookEntity book, MemberEntity member, LocalDate loanedAt, LocalDate returnDate) {
         this.book = book;
         this.member = member;
         this.loanedAt = loanedAt;
