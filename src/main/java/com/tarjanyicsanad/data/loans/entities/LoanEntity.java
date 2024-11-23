@@ -1,7 +1,9 @@
 package com.tarjanyicsanad.data.loans.entities;
 
 import com.tarjanyicsanad.data.books.entities.BookEntity;
+import com.tarjanyicsanad.data.books.entities.BookEntity_;
 import com.tarjanyicsanad.data.members.entities.MemberEntity;
+import com.tarjanyicsanad.data.members.entities.MemberEntity_;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

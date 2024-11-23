@@ -24,7 +24,7 @@ public class BookEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
     @OneToMany(mappedBy = LoanEntity_.BOOK)

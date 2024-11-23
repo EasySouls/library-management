@@ -1,6 +1,7 @@
 package com.tarjanyicsanad.data.members.entities;
 
 import com.tarjanyicsanad.data.loans.entities.LoanEntity;
+import com.tarjanyicsanad.data.loans.entities.LoanEntity_;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ public class MemberEntity {
     @Basic(optional = false)
     private LocalDate joinedAt;
 
-    @OneToMany(mappedBy = MemberEntity_.LOANS, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = LoanEntity_.MEMBER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanEntity> loans = new ArrayList<>();
 
     public MemberEntity() {}
