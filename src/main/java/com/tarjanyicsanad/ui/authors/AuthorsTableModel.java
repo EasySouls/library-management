@@ -1,9 +1,11 @@
 package com.tarjanyicsanad.ui.authors;
 
+import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class AuthorsTableModel extends AbstractTableModel {
 
@@ -11,6 +13,12 @@ public class AuthorsTableModel extends AbstractTableModel {
 
     public AuthorsTableModel(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
+    }
+
+    public void addAuthor(String firstName, String lastName, String dateOfBirthString) {
+        LocalDate dateOfBirth = LocalDate.parse(dateOfBirthString);
+        authorRepository.addAuthor(new Author(0, firstName, lastName, dateOfBirth, Set.of()));
+        fireTableDataChanged();
     }
 
     public void removeAuthor(int id) {
