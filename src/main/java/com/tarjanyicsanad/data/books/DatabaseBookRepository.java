@@ -45,7 +45,7 @@ public class DatabaseBookRepository implements BookRepository {
     }
 
     @Override
-    public List<Book> findAll() {
+    public List<Book> findAllBooks() {
         List<BookEntity> bookEntities = new ArrayList<>();
         sessionFactory.inTransaction(session ->
             bookEntities.addAll(session.createQuery("SELECT b FROM books b", BookEntity.class).getResultList())

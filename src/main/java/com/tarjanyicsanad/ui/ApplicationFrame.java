@@ -114,8 +114,8 @@ public class ApplicationFrame {
     private void saveToFile() {
         try(ObjectOutputStream bookStream = new ObjectOutputStream(new FileOutputStream("books.dat"));
             ObjectOutputStream authorStream = new ObjectOutputStream(new FileOutputStream("authors.dat"))) {
-            bookStream.writeObject(bookRepository.findAll());
-            authorStream.writeObject(authorRepository.findAll());
+            bookStream.writeObject(bookRepository.findAllBooks());
+            authorStream.writeObject(authorRepository.findAllAuthors());
         } catch (Exception e) {
             logger.error("Error while saving to file", e);
         }

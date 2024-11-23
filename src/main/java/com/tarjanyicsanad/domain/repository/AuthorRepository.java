@@ -29,7 +29,7 @@ public interface AuthorRepository {
      * Returns a list of all authors.
      * The list is unmodifiable, meaning that changes to it will not be reflected in the data.
      */
-    List<Author> findAll();
+    List<Author> findAllAuthors();
 
     /**
      * Updates the author with the same id as the given author.

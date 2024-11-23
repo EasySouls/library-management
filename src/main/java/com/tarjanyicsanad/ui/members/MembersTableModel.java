@@ -1,6 +1,5 @@
 package com.tarjanyicsanad.ui.members;
 
-import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 
@@ -23,7 +22,7 @@ public class MembersTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return memberRepository.findAll().size();
+        return memberRepository.findAllMembers().size();
     }
 
     @Override
@@ -33,7 +32,7 @@ public class MembersTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Optional<Member> memberOpt = Optional.ofNullable(memberRepository.findAll().get(rowIndex));
+        Optional<Member> memberOpt = Optional.ofNullable(memberRepository.findAllMembers().get(rowIndex));
         if (memberOpt.isEmpty()) {
             return null;
         }

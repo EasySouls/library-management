@@ -40,7 +40,7 @@ public class InMemoryAuthorRepository implements AuthorRepository {
     }
 
     @Override
-    public List<Author> findAll() {
+    public List<Author> findAllAuthors() {
         return authors;
     }
 

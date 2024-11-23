@@ -24,7 +24,7 @@ public interface MemberRepository {
      * Get all members from the repository
      * @return a list of all members
      */
-    List<Member> findAll();
+    List<Member> findAllMembers();
 
     /**
      * Remove a member from the repository

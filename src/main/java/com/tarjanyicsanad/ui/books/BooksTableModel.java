@@ -22,7 +22,7 @@ public class BooksTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return bookRepository.findAll().size();
+        return bookRepository.findAllBooks().size();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BooksTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Optional<Book> bookOpt = Optional.ofNullable(bookRepository.findAll().get(rowIndex));
+        Optional<Book> bookOpt = Optional.ofNullable(bookRepository.findAllBooks().get(rowIndex));
         if (bookOpt.isEmpty()) {
             return null;
         }

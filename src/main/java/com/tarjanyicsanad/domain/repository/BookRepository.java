@@ -31,7 +31,7 @@ public interface BookRepository {
      * Get all books from the repository
      * @return a list of all books in the repository
      */
-    List<Book> findAll();
+    List<Book> findAllBooks();
 
     /**
      * Updates the book with the same id as the given book.

@@ -1,35 +1,28 @@
 package com.tarjanyicsanad.di;
 
-import com.tarjanyicsanad.data.authors.DatabaseAuthorRepository;
-import com.tarjanyicsanad.data.books.DatabaseBookRepository;
-import com.tarjanyicsanad.data.members.DatabaseMemberRepository;
+import com.tarjanyicsanad.data.authors.JpaAuthorRepository;
+import com.tarjanyicsanad.data.books.JpaBookRepository;
+import com.tarjanyicsanad.data.members.JpaMemberRepository;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
-import org.hibernate.SessionFactory;
 
 import javax.inject.Singleton;
 
 @Module
-public class DatabaseRepositoryModule {
+public abstract class DatabaseRepositoryModule {
 
-    @Provides
+    @Binds
     @Singleton
-    BookRepository provideBookRepository(SessionFactory sessionFactory) {
-        return new DatabaseBookRepository(sessionFactory);
-    }
+    abstract BookRepository bindBookRepository(JpaBookRepository jpaBookRepository);
 
-    @Provides
+    @Binds
     @Singleton
-    AuthorRepository provideAuthorRepository(SessionFactory sessionFactory) {
-        return new DatabaseAuthorRepository(sessionFactory);
-    }
+    abstract AuthorRepository bindAuthorRepository(JpaAuthorRepository jpaAuthorRepository);
 
-    @Provides
+    @Binds
     @Singleton
-    MemberRepository provideMemberRepository(SessionFactory sessionFactory) {
-        return new DatabaseMemberRepository(sessionFactory);
-    }
+    abstract MemberRepository bindMemberRepository(JpaMemberRepository jpaMemberRepository);
 }

@@ -20,7 +20,7 @@ public class AuthorsTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return authorRepository.findAll().size();
+        return authorRepository.findAllAuthors().size();
     }
 
     @Override
@@ -31,9 +31,9 @@ public class AuthorsTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         return switch (columnIndex) {
-            case 0 -> authorRepository.findAll().get(rowIndex).firstName();
-            case 1 -> authorRepository.findAll().get(rowIndex).lastName();
-            case 2 -> authorRepository.findAll().get(rowIndex).dateOfBirth();
+            case 0 -> authorRepository.findAllAuthors().get(rowIndex).firstName();
+            case 1 -> authorRepository.findAllAuthors().get(rowIndex).lastName();
+            case 2 -> authorRepository.findAllAuthors().get(rowIndex).dateOfBirth();
             default -> null;
         };
     }

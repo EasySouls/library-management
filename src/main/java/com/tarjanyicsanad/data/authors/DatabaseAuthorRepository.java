@@ -45,7 +45,7 @@ public class DatabaseAuthorRepository implements AuthorRepository {
     }
 
     @Override
-    public List<Author> findAll() {
+    public List<Author> findAllAuthors() {
         List<AuthorEntity> authorEntities = new ArrayList<>();
         sessionFactory.inTransaction(session ->
                 authorEntities.addAll(session.createQuery("SELECT a FROM authors a", AuthorEntity.class).getResultList())

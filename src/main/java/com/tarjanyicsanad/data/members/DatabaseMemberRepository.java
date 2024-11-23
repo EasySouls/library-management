@@ -46,7 +46,7 @@ public class DatabaseMemberRepository implements MemberRepository {
     }
 
     @Override
-    public List<Member> findAll() {
+    public List<Member> findAllMembers() {
         List<MemberEntity> memberEntities = new ArrayList<>();
         sessionFactory.inTransaction(session ->
                 memberEntities.addAll(session.createQuery("SELECT m FROM members m", MemberEntity.class).getResultList())

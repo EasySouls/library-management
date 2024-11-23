@@ -30,7 +30,7 @@ public class InMemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public List<Member> findAll() {
+    public List<Member> findAllMembers() {
         return members;
     }
 
