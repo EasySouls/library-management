@@ -28,7 +28,7 @@ public class UserSettings {
     }
 
     public static boolean getLoadFromFile() {
-        return preferences.getBoolean(LOAD_FROM_FILE_KEY, false);
+        return preferences.getBoolean(LOAD_FROM_FILE_KEY, true);
     }
 
     public static void setLoadFromFile(boolean value) {

@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -88,21 +89,24 @@ public class ApplicationFrame {
     /**
      * Reads the data from the files and adds it to the repositories
      */
-    @SuppressWarnings("unchecked")
     private void readFromFile() {
-        try(ObjectInputStream bookStream = new ObjectInputStream(getClass().getResourceAsStream("books.dat"));
-            ObjectInputStream authorStream = new ObjectInputStream(getClass().getResourceAsStream("authors.dat"))) {
+        try(ObjectInputStream bookStream = new ObjectInputStream(new FileInputStream("books.dat"));
+            ObjectInputStream authorStream = new ObjectInputStream(new FileInputStream("authors.dat"))) {
 
-            List<Book> books = (List<Book>)bookStream.readObject();
-            books.forEach(book -> {
+            Object readObject;
+            while ((readObject = bookStream.readObject()) != null) {
+                logger.info(readObject);
+                Book book = (Book) readObject;
                 bookRepository.addBook(book);
                 logger.info(book);
-            });
-            List<Author> authors = (List<Author>)authorStream.readObject();
-            authors.forEach(author -> {
+            }
+
+            while ((readObject = authorStream.readObject()) != null) {
+                logger.info(readObject);
+                Author author = (Author) readObject;
                 authorRepository.addAuthor(author);
                 logger.info(author);
-            });
+            }
         } catch (Exception e) {
             logger.error("Error while reading from file", e);
         }

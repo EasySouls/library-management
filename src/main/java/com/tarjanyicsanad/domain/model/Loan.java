@@ -2,6 +2,7 @@ package com.tarjanyicsanad.domain.model;
 
 import com.tarjanyicsanad.data.loans.entities.LoanEntity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public record Loan(
@@ -10,7 +11,7 @@ public record Loan(
         Member member,
         LocalDate loanedAt,
         LocalDate returnDate
-) {
+) implements Serializable {
     public Loan {
         if (loanedAt.isAfter(returnDate)) {
             throw new IllegalArgumentException("Return date must be after loan date");
