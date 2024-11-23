@@ -1,6 +1,5 @@
 package com.tarjanyicsanad.domain.repository;
 
-import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Member;
 
@@ -25,7 +24,7 @@ public interface MemberRepository {
      * Get all members from the repository
      * @return a list of all members
      */
-    List<Member> getAllMembers();
+    List<Member> findAll();
 
     /**
      * Remove a member from the repository

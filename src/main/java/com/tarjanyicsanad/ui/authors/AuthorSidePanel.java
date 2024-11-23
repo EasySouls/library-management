@@ -31,7 +31,10 @@ public class AuthorSidePanel extends JPanel {
         add(dateOfBirthField);
 
         JButton deleteButton = new JButton("Törlés");
-        deleteButton.addActionListener(e -> onDelete.accept(author));
+        deleteButton.addActionListener(e -> {
+            onDelete.accept(author);
+            setData(null);
+        });
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(deleteButton);
 
@@ -41,11 +44,12 @@ public class AuthorSidePanel extends JPanel {
 
     public void setData(Author author) {
         this.author = author;
-        nameField.setText(author.firstName() + " " + author.lastName());
-        if (author.dateOfBirth() == null) {
+        if (author == null) {
+            nameField.setText("");
             dateOfBirthField.setText("");
             return;
         }
+        nameField.setText(author.firstName() + " " + author.lastName());
         dateOfBirthField.setText(author.dateOfBirth().toString());
     }
 }

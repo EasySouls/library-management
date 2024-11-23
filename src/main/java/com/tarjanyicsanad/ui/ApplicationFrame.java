@@ -9,9 +9,7 @@ import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 import com.tarjanyicsanad.ui.authors.AuthorsScreen;
-import com.tarjanyicsanad.ui.authors.AuthorsTableModel;
 import com.tarjanyicsanad.ui.books.BooksScreen;
-import com.tarjanyicsanad.ui.books.BooksTableModel;
 import com.tarjanyicsanad.ui.members.MembersScreen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +30,7 @@ public class ApplicationFrame {
     private final AuthorRepository authorRepository;
     private final MemberRepository memberRepository;
 
-    private static Logger logger = LogManager.getLogger(ApplicationFrame.class);
+    private static final Logger logger = LogManager.getLogger(ApplicationFrame.class);
 
     public ApplicationFrame(String title, int width, int height) {
         /// Handle dependency injection
@@ -69,8 +67,6 @@ public class ApplicationFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(width, height);
 
-        AuthorsTableModel authorsTableModel = new AuthorsTableModel(authorRepository);
-
         CardLayout screensLayout = new CardLayout();
         screensLayout.addLayoutComponent(new BooksScreen(bookRepository), Screens.BOOKS);
         screensLayout.addLayoutComponent(new AuthorsScreen(authorRepository), Screens.AUTHORS);
@@ -79,15 +75,12 @@ public class ApplicationFrame {
         JPanel screens = new JPanel(screensLayout);
         screens.add(new BooksScreen(bookRepository), Screens.BOOKS);
         screens.add(new AuthorsScreen(authorRepository), Screens.AUTHORS);
-
+        screens.add(new MembersScreen(memberRepository), Screens.MEMBERS);
 
         frame.setJMenuBar(new MenuBar(
                 layout -> screensLayout.show(screens, layout),
                 this::saveToFile,
-                () -> {
-                    readFromFile();
-                    authorsTableModel.fireTableDataChanged();
-                }
+                this::readFromFile
         ));
         frame.add(screens);
     }

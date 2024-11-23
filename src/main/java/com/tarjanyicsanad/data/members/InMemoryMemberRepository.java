@@ -5,15 +5,16 @@ import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InMemoryMemberRepository implements MemberRepository {
-    private final List<Member> members;
+    private final ArrayList<Member> members;
 
     @Inject
     public InMemoryMemberRepository(List<Member> members) {
-        this.members = members;
+        this.members = new ArrayList<>(members);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class InMemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public List<Member> getAllMembers() {
-        return List.copyOf(members);
+    public List<Member> findAll() {
+        return members;
     }
 
     @Override

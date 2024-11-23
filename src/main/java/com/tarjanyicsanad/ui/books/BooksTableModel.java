@@ -41,7 +41,8 @@ public class BooksTableModel extends AbstractTableModel {
             case 0 -> book.title();
             case 1 -> book.description();
             case 2 -> book.author();
-            default -> book.publishingDate();
+            case 3 -> book.publishingDate();
+            default -> "";
         };
     }
 

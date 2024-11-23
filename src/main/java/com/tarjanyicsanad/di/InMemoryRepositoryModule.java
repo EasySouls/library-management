@@ -35,9 +35,9 @@ abstract class InMemoryRepositoryModule {
     @Provides
     static List<Book> provideTestBooks() {
         return List.of(
-                new Book(0, "Book 1", "Description 1", "Author 1", null),
-                new Book(1, "Book 2", "Description 2", "Author 2", null),
-                new Book(2, "Book 3", "Description 3", "Author 3", null)
+                new Book(0, "Book 1", "Description 1", "Author 1", LocalDate.of(2021, 1, 1)),
+                new Book(1, "Book 2", "Description 2", "Author 2", LocalDate.of(2021, 2, 2)),
+                new Book(2, "Book 3", "Description 3", "Author 3", LocalDate.of(2021, 3, 3))
         );
     }
 

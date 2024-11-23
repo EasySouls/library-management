@@ -47,7 +47,10 @@ public class BookSidePanel extends JPanel {
         add(publishingDateField);
 
         JButton deleteButton = new JButton("Törlés");
-        deleteButton.addActionListener(e -> onDelete.accept(book));
+        deleteButton.addActionListener(e -> {
+            onDelete.accept(book);
+            setData(null);
+        });
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(deleteButton);
 
@@ -59,13 +62,16 @@ public class BookSidePanel extends JPanel {
 
     public void setData(Book book) {
         this.book = book;
-        titleField.setText(book.title());
-        descriptionArea.setText(book.description());
-        authorField.setText(book.author());
-        if (book.publishingDate() == null) {
+        if (book == null) {
+            titleField.setText("");
+            descriptionArea.setText("");
+            authorField.setText("");
             publishingDateField.setText("");
             return;
         }
+        titleField.setText(book.title());
+        descriptionArea.setText(book.description());
+        authorField.setText(book.author());
         publishingDateField.setText(book.publishingDate().toString());
     }
 }

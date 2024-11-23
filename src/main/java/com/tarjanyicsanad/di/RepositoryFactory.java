@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 @Component(modules = {
         InMemoryRepositoryModule.class,
 //        DatabaseRepositoryModule.class,
-//        DatabaseModule.class
+        DatabaseModule.class
 })
 @Singleton
 public interface RepositoryFactory {
