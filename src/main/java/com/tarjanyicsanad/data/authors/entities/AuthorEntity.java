@@ -1,24 +1,32 @@
 package com.tarjanyicsanad.data.authors.entities;
 
+import com.tarjanyicsanad.data.books.entities.BookEntity;
+import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity(name = "authors")
 public class AuthorEntity {
 
-    @Id Integer id;
+    @Id
+    Integer id;
 
-    @NotNull
+    @Basic(optional = false)
     String firstName;
 
-    @NotNull
+    @Basic(optional = false)
     String lastName;
 
     @NotNull
     LocalDate birthDate;
+
+    @ManyToMany()
+    Set<BookEntity> books;
 
     public AuthorEntity() {}
 

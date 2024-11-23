@@ -22,7 +22,7 @@ public class DatabaseBookRepository implements BookRepository {
     @Override
     public void addBook(Book book) {
         sessionFactory.inTransaction(session -> {
-            BookEntity bookEntity = new BookEntity(book.id(), book.title(), book.description(), book.author());
+            BookEntity bookEntity = book.toEntity();
             session.persist(bookEntity);
         });
     }

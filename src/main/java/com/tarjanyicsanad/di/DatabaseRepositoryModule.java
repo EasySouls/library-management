@@ -2,8 +2,10 @@ package com.tarjanyicsanad.di;
 
 import com.tarjanyicsanad.data.authors.DatabaseAuthorRepository;
 import com.tarjanyicsanad.data.books.DatabaseBookRepository;
+import com.tarjanyicsanad.data.members.DatabaseMemberRepository;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.MemberRepository;
 import dagger.Module;
 import dagger.Provides;
 import org.hibernate.SessionFactory;
@@ -23,5 +25,11 @@ public class DatabaseRepositoryModule {
     @Singleton
     AuthorRepository provideAuthorRepository(SessionFactory sessionFactory) {
         return new DatabaseAuthorRepository(sessionFactory);
+    }
+
+    @Provides
+    @Singleton
+    MemberRepository provideMemberRepository(SessionFactory sessionFactory) {
+        return new DatabaseMemberRepository(sessionFactory);
     }
 }

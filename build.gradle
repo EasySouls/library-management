@@ -11,15 +11,19 @@ repositories {
 
 dependencies {
     // Hibernate
-    implementation 'org.hibernate.orm:hibernate-core:6.6.1.Final'
+    implementation 'org.hibernate.orm:hibernate-core:6.6.3.Final'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
-    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.6.1.Final'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.6.3.Final'
 
     // PostgreSQL
     implementation 'org.postgresql:postgresql:42.7.2'
 
     // H2 database
     runtimeOnly 'com.h2database:h2:2.2.220'
+
+    // SQLite
+    implementation 'org.xerial:sqlite-jdbc:3.47.0.0'
+    implementation 'org.hibernate.orm:hibernate-community-dialects:6.6.3.Final'
 
     // Dagger
     var daggerVersion = '2.52'

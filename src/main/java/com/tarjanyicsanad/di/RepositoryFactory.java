@@ -8,8 +8,8 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 @Component(modules = {
-        InMemoryRepositoryModule.class,
-//        DatabaseRepositoryModule.class,
+//        InMemoryRepositoryModule.class,
+        DatabaseRepositoryModule.class,
         DatabaseModule.class
 })
 @Singleton
