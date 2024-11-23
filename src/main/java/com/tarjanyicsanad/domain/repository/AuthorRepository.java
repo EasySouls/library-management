@@ -26,6 +26,13 @@ public interface AuthorRepository {
     Optional<Author> getAuthor(int id);
 
     /**
+     * Returns an author with the given name.
+     * The name is in the format "firstName lastName".
+     * @return an empty optional if no author with the given name is found
+     */
+    Optional<Author> findAuthorByName(String name);
+
+    /**
      * Returns a list of all authors.
      * The list is unmodifiable, meaning that changes to it will not be reflected in the data.
      */

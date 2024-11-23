@@ -1,18 +1,31 @@
 package com.tarjanyicsanad.ui.books;
 
+import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public class BooksTableModel extends AbstractTableModel {
 
     private final transient BookRepository bookRepository;
+    private final transient AuthorRepository authorRepository;
 
-    public BooksTableModel(BookRepository bookRepository) {
+    public BooksTableModel(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
+    }
+
+    public void addBook(String title, String description, String authorName, String publishingDateString) {
+        LocalDate publishingDate = LocalDate.parse(publishingDateString);
+        Author author = authorRepository.findAuthorByName(authorName).orElseThrow();
+        bookRepository.addBook(new Book(0, title, description, author, Set.of(), publishingDate));
+        fireTableDataChanged();
     }
 
     public void removeBook(int id) {

@@ -45,6 +45,18 @@ public class DatabaseAuthorRepository implements AuthorRepository {
     }
 
     @Override
+    public Optional<Author> findAuthorByName(String name) {
+        AtomicReference<AuthorEntity> authorEntity = new AtomicReference<>();
+        sessionFactory.inTransaction(session ->
+                // TODO: We have to query for the author by both first and last name
+                authorEntity.set(session.createQuery("SELECT a FROM authors a WHERE a.firstName = :name", AuthorEntity.class)
+                        .setParameter("name", name)
+                        .getSingleResult())
+        );
+        return Optional.ofNullable(authorEntity.get()).map(Author::fromEntity);
+    }
+
+    @Override
     public List<Author> findAllAuthors() {
         List<AuthorEntity> authorEntities = new ArrayList<>();
         sessionFactory.inTransaction(session ->

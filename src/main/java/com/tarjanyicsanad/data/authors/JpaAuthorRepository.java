@@ -3,7 +3,6 @@ package com.tarjanyicsanad.data.authors;
 import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
 import com.tarjanyicsanad.domain.exceptions.AuthorNotFoundException;
 import com.tarjanyicsanad.domain.model.Author;
-import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import jakarta.persistence.EntityManager;
@@ -28,6 +27,16 @@ public class JpaAuthorRepository
     @Override
     public Optional<Author> getAuthor(int id) {
         return Optional.ofNullable(super.findById(id)).map(Author::fromEntity);
+    }
+
+    // Maybe we could use directly the EntityManager instead of filtering all authors
+    public Optional<Author> findAuthorByName(String name) {
+        String firstName = name.split(" ")[0];
+        String lastName = name.split(" ")[1];
+        return super.findAll().stream()
+                .map(Author::fromEntity)
+                .filter(author -> author.firstName().equals(firstName) && author.lastName().equals(lastName))
+                .findFirst();
     }
 
     @Override

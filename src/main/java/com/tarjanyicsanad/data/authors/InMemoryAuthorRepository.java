@@ -40,6 +40,17 @@ public class InMemoryAuthorRepository implements AuthorRepository {
     }
 
     @Override
+    public Optional<Author> findAuthorByName(String name) {
+        String firstName = name.split(" ")[0];
+        String lastName = name.split(" ")[1];
+        Author author = authors.stream()
+                .filter(a -> a.firstName().equals(firstName) && a.lastName().equals(lastName))
+                .findFirst()
+                .orElse(null);
+        return Optional.ofNullable(author);
+    }
+
+    @Override
     public List<Author> findAllAuthors() {
         return authors;
     }
