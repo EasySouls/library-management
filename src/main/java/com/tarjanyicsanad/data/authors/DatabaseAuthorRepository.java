@@ -22,7 +22,7 @@ public class DatabaseAuthorRepository implements AuthorRepository {
     @Override
     public void addAuthor(Author author) {
         sessionFactory.inTransaction(session -> {
-            AuthorEntity authorEntity = new AuthorEntity(author.id(), author.firstName(), author.lastName(), author.dateOfBirth());
+            AuthorEntity authorEntity = author.toEntity();
             session.persist(authorEntity);
         });
     }

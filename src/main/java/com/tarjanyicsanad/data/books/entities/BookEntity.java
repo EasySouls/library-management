@@ -1,39 +1,52 @@
 package com.tarjanyicsanad.data.books.entities;
 
 import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
-import com.tarjanyicsanad.data.authors.entities.AuthorEntity_;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import com.tarjanyicsanad.data.loans.entities.LoanEntity;
+import com.tarjanyicsanad.data.loans.entities.LoanEntity_;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 
 @Entity(name = "books")
 public class BookEntity {
+
     @Id
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Basic(optional = false)
-    String title;
+    private String title;
 
     @Basic(optional = false)
-    String description;
+    private String description;
 
-    @NotNull
-    String author;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private AuthorEntity author;
 
-    @ManyToMany(mappedBy = AuthorEntity_.BOOKS)
-    Set<AuthorEntity> authors;
+    @OneToMany(mappedBy = LoanEntity_.BOOK)
+    private Collection<LoanEntity> loan = new HashSet<>();
+
+    @Basic(optional = false)
+    private LocalDate publishingDate;
 
     public BookEntity() {}
 
-    public BookEntity(int id, String title, String description, String author) {
+    public BookEntity(int id,
+                      String title,
+                      String description,
+                      AuthorEntity author,
+                      Collection<LoanEntity> loans,
+                      LocalDate publishingDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.author = author;
+        this.loan = loans;
+        this.publishingDate = publishingDate;
     }
 
     public int getId() {
@@ -48,7 +61,23 @@ public class BookEntity {
         return description;
     }
 
-    public @NotNull String getAuthor() {
+    public AuthorEntity getAuthor() {
         return author;
+    }
+
+    public Collection<LoanEntity> getLoan() {
+        return loan;
+    }
+
+    public LocalDate getPublishingDate() {
+        return publishingDate;
+    }
+
+    public void setLoan(Collection<LoanEntity> loan) {
+        this.loan = loan;
+    }
+
+    public void setAuthor(AuthorEntity author) {
+        this.author = author;
     }
 }

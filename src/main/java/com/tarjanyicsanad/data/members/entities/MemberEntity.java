@@ -1,20 +1,30 @@
 package com.tarjanyicsanad.data.members.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.tarjanyicsanad.data.loans.entities.LoanEntity;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "members")
 public class MemberEntity {
 
-    @Id Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    String name;
+    @Basic(optional = false)
+    private String name;
 
-    String email;
+    @Basic(optional = false)
+    private String email;
 
-    LocalDate joinedAt;
+    @Basic(optional = false)
+    private LocalDate joinedAt;
+
+    @OneToMany(mappedBy = MemberEntity_.LOANS, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LoanEntity> loans = new ArrayList<>();
 
     public MemberEntity() {}
 
@@ -39,5 +49,13 @@ public class MemberEntity {
 
     public LocalDate getJoinedAt() {
         return joinedAt;
+    }
+
+    public List<LoanEntity> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<LoanEntity> loans) {
+        this.loans = loans;
     }
 }

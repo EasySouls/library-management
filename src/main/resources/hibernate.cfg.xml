@@ -12,5 +12,6 @@
         <mapping class="com.tarjanyicsanad.data.books.entities.BookEntity"/>
         <mapping class="com.tarjanyicsanad.data.members.entities.MemberEntity"/>
         <mapping class="com.tarjanyicsanad.data.authors.entities.AuthorEntity"/>
+        <mapping class="com.tarjanyicsanad.data.loans.entities.LoanEntity"/>
     </session-factory>
 </hibernate-configuration>

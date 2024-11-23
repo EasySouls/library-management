@@ -1,40 +1,41 @@
 package com.tarjanyicsanad.data.authors.entities;
 
 import com.tarjanyicsanad.data.books.entities.BookEntity;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import com.tarjanyicsanad.data.books.entities.BookEntity_;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.Collection;
+import java.util.HashSet;
 
 @Entity(name = "authors")
 public class AuthorEntity {
 
     @Id
-    Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Basic(optional = false)
-    String firstName;
+    private String firstName;
 
     @Basic(optional = false)
-    String lastName;
+    private String lastName;
 
     @NotNull
-    LocalDate birthDate;
+    private LocalDate birthDate;
 
-    @ManyToMany()
-    Set<BookEntity> books;
+    @OneToMany(mappedBy = BookEntity_.AUTHOR, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<BookEntity> books = new HashSet<>();
 
     public AuthorEntity() {}
 
-    public AuthorEntity(Integer id, String firstName, String lastName, LocalDate birthDate) {
+    public AuthorEntity(Integer id, String firstName, String lastName, LocalDate birthDate, Collection<BookEntity> books) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.books = books;
     }
 
     public Integer getId() {
@@ -51,5 +52,13 @@ public class AuthorEntity {
 
     public @NotNull LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    public Collection<BookEntity> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Collection<BookEntity> books) {
+        this.books = books;
     }
 }

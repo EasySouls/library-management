@@ -71,7 +71,7 @@ public class BookSidePanel extends JPanel {
         }
         titleField.setText(book.title());
         descriptionArea.setText(book.description());
-        authorField.setText(book.author());
+        authorField.setText(book.author().fullName());
         publishingDateField.setText(book.publishingDate().toString());
     }
 }

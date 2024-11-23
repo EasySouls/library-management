@@ -3,7 +3,6 @@ package com.tarjanyicsanad.data.books;
 import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
-import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 import jakarta.persistence.EntityManager;

@@ -10,6 +10,8 @@
         <class>com.tarjanyicsanad.data.books.entities.BookEntity</class>
         <class>com.tarjanyicsanad.data.members.entities.MemberEntity</class>
         <class>com.tarjanyicsanad.data.authors.entities.AuthorEntity</class>
+        <class>com.tarjanyicsanad.data.loans.entities.LoanEntity</class>
+
         <!-- JDBC connection settings -->
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC" />

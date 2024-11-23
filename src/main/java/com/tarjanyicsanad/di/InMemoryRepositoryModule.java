@@ -34,19 +34,20 @@ abstract class InMemoryRepositoryModule {
 
     @Provides
     static List<Book> provideTestBooks() {
+        Author author = new Author(0, "John", "Gray", LocalDate.of(1990, 1, 1), List.of());
         return List.of(
-                new Book(0, "Book 1", "Description 1", "Author 1", LocalDate.of(2021, 1, 1)),
-                new Book(1, "Book 2", "Description 2", "Author 2", LocalDate.of(2021, 2, 2)),
-                new Book(2, "Book 3", "Description 3", "Author 3", LocalDate.of(2021, 3, 3))
+                new Book(0, "Book 1", "Description 1", author, List.of(), LocalDate.of(2021, 1, 1)),
+                new Book(1, "Book 2", "Description 2", author, List.of(), LocalDate.of(2021, 2, 2)),
+                new Book(2, "Book 3", "Description 3", author, List.of(), LocalDate.of(2021, 3, 3))
         );
     }
 
     @Provides
     static List<Author> provideTestAuthors() {
         return List.of(
-                new Author(0, "James", "King", LocalDate.of(1990, 1, 1)),
-                new Author(1, "Charles", "Brown", LocalDate.of(1991, 2, 2)),
-                new Author(2, "Elizabeth", "Marley", LocalDate.of(1992, 3, 3))
+                new Author(0, "James", "King", LocalDate.of(1990, 1, 1), List.of()),
+                new Author(1, "Charles", "Brown", LocalDate.of(1991, 2, 2), List.of()),
+                new Author(2, "Elizabeth", "Marley", LocalDate.of(1992, 3, 3), List.of())
         );
     }
 
