@@ -32,12 +32,15 @@ public class ApplicationFrame {
 
     private static final Logger logger = LogManager.getLogger(ApplicationFrame.class);
 
-    public ApplicationFrame(String title, int width, int height) {
-        /// Handle dependency injection
-        RepositoryFactory repositoryFactory = DaggerRepositoryFactory.create();
-        bookRepository = repositoryFactory.bookRepository();
-        authorRepository = repositoryFactory.authorRepository();
-        memberRepository = repositoryFactory.memberRepository();
+    public ApplicationFrame(String title,
+                            int width,
+                            int height,
+                            BookRepository bookRepository,
+                            AuthorRepository authorRepository,
+                            MemberRepository memberRepository) {
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
+        this.memberRepository = memberRepository;
 
         /// If the user wants to load the data from the file,
         /// and the preferred storage mode is not database, then load it

@@ -18,7 +18,11 @@
             <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlite:database.db" />
             <property name="hibernate.dialect" value="org.hibernate.community.dialect.SQLiteDialect" />
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+            <property name="hibernate.hbm2ddl.import_files" value="seed.sql"/>
+            <property name="hibernate.hbm2ddl.import_files_sql_extractor" value="org.hibernate.tool.schema.internal.script.SingleLineSqlScriptExtractor" />
         </properties>
     </persistence-unit>
 </persistence>

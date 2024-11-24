@@ -2,7 +2,6 @@ package com.tarjanyicsanad.ui.authors;
 
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
-import com.tarjanyicsanad.ui.books.BooksScreen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,8 +15,6 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class AuthorsScreen extends JPanel {
     private final JTextField firstNameField;
@@ -47,11 +44,11 @@ public class AuthorsScreen extends JPanel {
                 int selectedRow = authorsTable.getSelectedRow();
                 if (selectedRow != -1) {
                     int modelRow = authorsTable.convertRowIndexToModel(selectedRow);
-                    Optional<Author> selectedAuthorOpt = repository.getAuthor(modelRow);
-                    if (selectedAuthorOpt.isEmpty()) {
+                    Author selectedAuthor = repository.findAllAuthors().get(modelRow);
+                    if (!selectedAuthor.books().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "A szerzőnek vannak könyvei, ezért nem törölhető!");
                         return;
                     }
-                    Author selectedAuthor = selectedAuthorOpt.get();
                     sidePanel.setData(selectedAuthor);
                 }
             }

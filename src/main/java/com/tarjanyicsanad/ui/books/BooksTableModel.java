@@ -22,8 +22,8 @@ public class BooksTableModel extends AbstractTableModel {
 
     public void addBook(String title, String description, String authorName, String publishingDateString) {
         LocalDate publishingDate = LocalDate.parse(publishingDateString);
-        String firstName = authorName.split(" ")[0];
-        String lastName = authorName.split(" ")[1];
+        String lastName = authorName.split(" ")[0];
+        String firstName = authorName.split(" ")[1];
 
 
         Author author = Author.fromEntity(authorRepository.findAuthorByName(firstName, lastName)
@@ -59,7 +59,7 @@ public class BooksTableModel extends AbstractTableModel {
         return switch (columnIndex) {
             case 0 -> book.title();
             case 1 -> book.description();
-            case 2 -> book.author();
+            case 2 -> book.author().fullName();
             case 3 -> book.publishingDate();
             default -> "";
         };
