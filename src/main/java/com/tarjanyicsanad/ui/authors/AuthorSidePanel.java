@@ -1,6 +1,7 @@
 package com.tarjanyicsanad.ui.authors;
 
 import com.tarjanyicsanad.domain.model.Author;
+import com.tarjanyicsanad.domain.model.Book;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.util.function.Consumer;
 public class AuthorSidePanel extends JPanel {
     private final JTextField nameField;
     private final JTextField dateOfBirthField;
+    private final JList<String> booksList;
 
     private Author author;
 
@@ -40,6 +42,12 @@ public class AuthorSidePanel extends JPanel {
 
         nameField.setEditable(false);
         dateOfBirthField.setEditable(false);
+
+        booksList = new JList<>();
+        booksList.setMaximumSize(new Dimension(400, 100));
+        booksList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        booksList.setListData(new String[0]);
+        add(new JScrollPane(booksList));
     }
 
     public void setData(Author author) {
@@ -51,5 +59,6 @@ public class AuthorSidePanel extends JPanel {
         }
         nameField.setText(author.firstName() + " " + author.lastName());
         dateOfBirthField.setText(author.dateOfBirth().toString());
+        booksList.setListData(author.books().stream().map(Book::title).toArray(String[]::new));
     }
 }
