@@ -16,6 +16,7 @@ import dagger.Provides;
 import javax.inject.Singleton;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Module
 abstract class InMemoryRepositoryModule {
@@ -34,7 +35,7 @@ abstract class InMemoryRepositoryModule {
 
     @Provides
     static List<Book> provideTestBooks() {
-        Author author = new Author(0, "John", "Gray", LocalDate.of(1990, 1, 1), List.of());
+        Author author = new Author(0, "John", "Gray", LocalDate.of(1990, 1, 1), Set.of());
         return List.of(
                 new Book(0, "Book 1", "Description 1", author, List.of(), LocalDate.of(2021, 1, 1)),
                 new Book(1, "Book 2", "Description 2", author, List.of(), LocalDate.of(2021, 2, 2)),
@@ -45,9 +46,9 @@ abstract class InMemoryRepositoryModule {
     @Provides
     static List<Author> provideTestAuthors() {
         return List.of(
-                new Author(0, "James", "King", LocalDate.of(1990, 1, 1), List.of()),
-                new Author(1, "Charles", "Brown", LocalDate.of(1991, 2, 2), List.of()),
-                new Author(2, "Elizabeth", "Marley", LocalDate.of(1992, 3, 3), List.of())
+                new Author(0, "James", "King", LocalDate.of(1990, 1, 1), Set.of()),
+                new Author(1, "Charles", "Brown", LocalDate.of(1991, 2, 2), Set.of()),
+                new Author(2, "Elizabeth", "Marley", LocalDate.of(1992, 3, 3), Set.of())
         );
     }
 

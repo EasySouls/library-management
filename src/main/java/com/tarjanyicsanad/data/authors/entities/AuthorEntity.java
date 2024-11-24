@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "authors")
 public class AuthorEntity {
@@ -26,11 +26,19 @@ public class AuthorEntity {
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = BookEntity_.AUTHOR, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<BookEntity> books = new HashSet<>();
+    private Set<BookEntity> books = new HashSet<>();
 
     public AuthorEntity() {}
 
-    public AuthorEntity(String firstName, String lastName, LocalDate birthDate, Collection<BookEntity> books) {
+    public AuthorEntity(String firstName, String lastName, LocalDate birthDate, Set<BookEntity> books) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.books = books;
+    }
+
+    public AuthorEntity(Integer id, String firstName, String lastName, LocalDate birthDate, Set<BookEntity> books) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -53,11 +61,11 @@ public class AuthorEntity {
         return birthDate;
     }
 
-    public Collection<BookEntity> getBooks() {
+    public Set<BookEntity> getBooks() {
         return books;
     }
 
-    public void setBooks(Collection<BookEntity> books) {
+    public void setBooks(Set<BookEntity> books) {
         this.books = books;
     }
 }

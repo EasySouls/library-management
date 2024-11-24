@@ -6,13 +6,15 @@ import com.tarjanyicsanad.data.books.entities.BookEntity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public record Author(
         Integer id,
         String firstName,
         String lastName,
         LocalDate dateOfBirth,
-        Collection<Book> books
+        Set<Book> books
 ) implements Serializable {
     public String fullName() {
         return firstName + " " + lastName;
@@ -23,16 +25,16 @@ public record Author(
     }
 
     public AuthorEntity toEntity() {
-        Collection<BookEntity> bookEntities = books.stream()
+        Set<BookEntity> bookEntities = books.stream()
                 .map(Book::toEntity)
-                .toList();
+                .collect(Collectors.toSet());
         return new AuthorEntity(firstName, lastName, dateOfBirth, bookEntities);
     }
 
     public static Author fromEntity(AuthorEntity entity) {
-        Collection<Book> books = entity.getBooks().stream()
+        Set<Book> books = entity.getBooks().stream()
                 .map(Book::fromEntity)
-                .toList();
+                .collect(Collectors.toSet());
         return new Author(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getBirthDate(), books);
     }
 }

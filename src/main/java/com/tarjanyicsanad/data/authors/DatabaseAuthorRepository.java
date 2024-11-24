@@ -45,15 +45,25 @@ public class DatabaseAuthorRepository implements AuthorRepository {
     }
 
     @Override
-    public Optional<Author> findAuthorByName(String name) {
+    public AuthorEntity findOrCreateEntity(Author author) {
+        return findAuthorByName(author.firstName(), author.lastName())
+                .orElseGet(() -> {
+                    AuthorEntity newEntity = author.toEntity();
+                    sessionFactory.inTransaction(session -> session.persist(newEntity));
+                    return newEntity;
+                });
+    }
+
+    @Override
+    public Optional<AuthorEntity> findAuthorByName(String firstName, String lastName) {
         AtomicReference<AuthorEntity> authorEntity = new AtomicReference<>();
         sessionFactory.inTransaction(session ->
-                // TODO: We have to query for the author by both first and last name
-                authorEntity.set(session.createQuery("SELECT a FROM authors a WHERE a.firstName = :name", AuthorEntity.class)
-                        .setParameter("name", name)
+                authorEntity.set(session.createQuery("SELECT a FROM authors a WHERE a.firstName = :firstName AND a.lastName = :lastName", AuthorEntity.class)
+                        .setParameter("firstName", firstName)
+                        .setParameter("lastName", lastName)
                         .getSingleResult())
         );
-        return Optional.ofNullable(authorEntity.get()).map(Author::fromEntity);
+        return Optional.ofNullable(authorEntity.get());
     }
 
     @Override

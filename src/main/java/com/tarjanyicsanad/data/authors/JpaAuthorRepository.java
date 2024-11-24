@@ -6,6 +6,7 @@ import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -29,14 +30,27 @@ public class JpaAuthorRepository
         return Optional.ofNullable(super.findById(id)).map(Author::fromEntity);
     }
 
-    // Maybe we could use directly the EntityManager instead of filtering all authors
-    public Optional<Author> findAuthorByName(String name) {
-        String firstName = name.split(" ")[0];
-        String lastName = name.split(" ")[1];
-        return super.findAll().stream()
-                .map(Author::fromEntity)
-                .filter(author -> author.firstName().equals(firstName) && author.lastName().equals(lastName))
-                .findFirst();
+    @Override
+    public AuthorEntity findOrCreateEntity(Author author) {
+        Optional<AuthorEntity> existingEntity = findAuthorByName(author.firstName(), author.lastName());
+        return existingEntity.orElseGet(() -> {
+            AuthorEntity newEntity = author.toEntity();
+            save(newEntity); // Save the new entity to the database
+            return newEntity;
+        });
+    }
+
+    @Override
+    public Optional<AuthorEntity> findAuthorByName(String firstName, String lastName) {
+        try {
+            return Optional.of(entityManager.createQuery(
+                            "SELECT a FROM authors a WHERE a.firstName = :firstName AND a.lastName = :lastName", AuthorEntity.class)
+                    .setParameter("firstName", firstName)
+                    .setParameter("lastName", lastName)
+                    .getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

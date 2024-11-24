@@ -23,7 +23,7 @@ public class BookEntity {
     @Basic(optional = false)
     private String description;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
 

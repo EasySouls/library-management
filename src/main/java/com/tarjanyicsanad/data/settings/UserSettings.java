@@ -12,7 +12,7 @@ public class UserSettings {
     private static final String LOAD_FROM_FILE_KEY = "loadFromFile";
 
     public static StorageMode getStorageMode() {
-        return StorageMode.valueOf(preferences.get(STORAGE_MODE_KEY, StorageMode.IN_MEMORY.name()));
+        return StorageMode.valueOf(preferences.get(STORAGE_MODE_KEY, StorageMode.DATABASE.name()));
     }
 
     public static void setStorageMode(StorageMode value) {
@@ -28,7 +28,7 @@ public class UserSettings {
     }
 
     public static boolean getLoadFromFile() {
-        return preferences.getBoolean(LOAD_FROM_FILE_KEY, true);
+        return preferences.getBoolean(LOAD_FROM_FILE_KEY, false);
     }
 
     public static void setLoadFromFile(boolean value) {

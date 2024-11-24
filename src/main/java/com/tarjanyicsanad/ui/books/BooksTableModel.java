@@ -7,7 +7,6 @@ import com.tarjanyicsanad.domain.repository.BookRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,7 +22,14 @@ public class BooksTableModel extends AbstractTableModel {
 
     public void addBook(String title, String description, String authorName, String publishingDateString) {
         LocalDate publishingDate = LocalDate.parse(publishingDateString);
-        Author author = authorRepository.findAuthorByName(authorName).orElseThrow();
+        String firstName = authorName.split(" ")[0];
+        String lastName = authorName.split(" ")[1];
+
+
+        Author author = Author.fromEntity(authorRepository.findAuthorByName(firstName, lastName)
+                .orElseThrow());
+        // We set the author to null because the author needs to be a persisted entity,
+        // so we add it later in the repository
         bookRepository.addBook(new Book(0, title, description, author, Set.of(), publishingDate));
         fireTableDataChanged();
     }

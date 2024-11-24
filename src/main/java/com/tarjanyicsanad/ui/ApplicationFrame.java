@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
 
 public class ApplicationFrame {
     private JFrame frame;
@@ -118,8 +117,20 @@ public class ApplicationFrame {
     private void saveToFile() {
         try(ObjectOutputStream bookStream = new ObjectOutputStream(new FileOutputStream("books.dat"));
             ObjectOutputStream authorStream = new ObjectOutputStream(new FileOutputStream("authors.dat"))) {
-            bookStream.writeObject(bookRepository.findAllBooks());
-            authorStream.writeObject(authorRepository.findAllAuthors());
+            bookRepository.findAllBooks().forEach(book -> {
+                try {
+                    bookStream.writeObject(book);
+                } catch (Exception e) {
+                    logger.error("Error while saving book to file", e);
+                }
+            });
+            authorRepository.findAllAuthors().forEach(author -> {
+                try {
+                    authorStream.writeObject(author);
+                } catch (Exception e) {
+                    logger.error("Error while saving author to file", e);
+                }
+            });
         } catch (Exception e) {
             logger.error("Error while saving to file", e);
         }

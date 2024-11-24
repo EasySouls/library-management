@@ -1,5 +1,6 @@
 package com.tarjanyicsanad.data.authors;
 
+import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
 import com.tarjanyicsanad.domain.exceptions.AuthorNotFoundException;
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
@@ -40,14 +41,22 @@ public class InMemoryAuthorRepository implements AuthorRepository {
     }
 
     @Override
-    public Optional<Author> findAuthorByName(String name) {
-        String firstName = name.split(" ")[0];
-        String lastName = name.split(" ")[1];
+    public AuthorEntity findOrCreateEntity(Author author) {
+        Optional<AuthorEntity> existingEntity = findAuthorByName(author.firstName(), author.lastName());
+        return existingEntity.orElseGet(() -> {
+            AuthorEntity newEntity = author.toEntity();
+            addAuthor(author);
+            return newEntity;
+        });
+    }
+
+    @Override
+    public Optional<AuthorEntity> findAuthorByName(String firstName, String lastName) {
         Author author = authors.stream()
                 .filter(a -> a.firstName().equals(firstName) && a.lastName().equals(lastName))
                 .findFirst()
                 .orElse(null);
-        return Optional.ofNullable(author);
+        return Optional.ofNullable(author.toEntity());
     }
 
     @Override

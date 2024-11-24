@@ -26,6 +26,12 @@ public abstract class BaseRepository<T, D, E extends Exception> {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+
+            // Check if the entity is already managed
+            if (!entityManager.contains(entity)) {
+                entity = entityManager.merge(entity);
+            }
+
             entityManager.persist(entity);
             transaction.commit();
         } catch (Exception e) {

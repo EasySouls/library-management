@@ -1,8 +1,10 @@
 package com.tarjanyicsanad.data.books;
 
+import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
 import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 import jakarta.persistence.EntityManager;
@@ -14,14 +16,21 @@ import java.util.Optional;
 public class JpaBookRepository
         extends BaseRepository<BookEntity, Integer, BookNotFoundException>
         implements BookRepository {
+
+    private final AuthorRepository authorRepository;
+
     @Inject
-    public JpaBookRepository(EntityManager entityManager) {
+    public JpaBookRepository(EntityManager entityManager, AuthorRepository authorRepository) {
         super(entityManager, BookEntity.class);
+        this.authorRepository = authorRepository;
     }
 
     @Override
     public void addBook(Book book) {
-        super.save(book.toEntity());
+        AuthorEntity managedAuthor = authorRepository.findOrCreateEntity(book.author());
+        BookEntity bookEntity = book.toEntity();
+        bookEntity.setAuthor(managedAuthor);
+        super.save(bookEntity);
     }
 
     @Override
