@@ -28,6 +28,13 @@ public interface BookRepository {
     Optional<Book> getBook(int id);
 
     /**
+     * Returns a book with the given title.
+     * @param title the title of the book to return
+     * @return an empty optional if no book with the given title is found
+     */
+    Book findBookByTitle(String title) throws BookNotFoundException;
+
+    /**
      * Get all books from the repository
      * @return a list of all books in the repository
      */

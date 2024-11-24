@@ -12,6 +12,9 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * JPA implementation of the {@link AuthorRepository} interface.
+ */
 public class JpaAuthorRepository
         extends BaseRepository<AuthorEntity, Integer, AuthorNotFoundException>
         implements AuthorRepository {

@@ -11,6 +11,9 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * JPA implementation of the {@link LoanRepository} interface.
+ */
 public class JpaLoanRepository
         extends BaseRepository<LoanEntity, Integer, LoanNotFoundException>
         implements LoanRepository {

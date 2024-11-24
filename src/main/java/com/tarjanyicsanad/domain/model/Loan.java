@@ -36,7 +36,7 @@ public record Loan(
 
     public static Loan fromEntity(LoanEntity entity) {
         return new Loan(entity.getId(),
-                Book.fromEntity(entity.getBook()),
+                Book.fromEntityShallow(entity.getBook()),
                 Member.fromEntity(entity.getMember()),
                 entity.getLoanedAt(),
                 entity.getReturnDate());

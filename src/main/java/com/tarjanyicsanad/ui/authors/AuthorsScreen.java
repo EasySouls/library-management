@@ -1,5 +1,6 @@
 package com.tarjanyicsanad.ui.authors;
 
+import com.tarjanyicsanad.domain.exceptions.AuthorNotFoundException;
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +24,10 @@ public class AuthorsScreen extends JPanel {
 
     private static final Logger logger = LogManager.getLogger(AuthorsScreen.class);
 
+    private final AuthorRepository repository;
+
     public AuthorsScreen(AuthorRepository repository) {
+        this.repository = repository;
         setLayout(new BorderLayout());
 
         AuthorsTableModel tableModel = new AuthorsTableModel(repository);
@@ -35,7 +39,7 @@ public class AuthorsScreen extends JPanel {
 
         add(new JScrollPane(authorsTable));
 
-        AuthorSidePanel sidePanel = new AuthorSidePanel(book -> tableModel.removeAuthor(book.id()));
+        AuthorSidePanel sidePanel = new AuthorSidePanel(this::removeAuthor);
         add(sidePanel, BorderLayout.EAST);
 
         authorsTable.addMouseListener(new MouseAdapter() {
@@ -44,11 +48,10 @@ public class AuthorsScreen extends JPanel {
                 int selectedRow = authorsTable.getSelectedRow();
                 if (selectedRow != -1) {
                     int modelRow = authorsTable.convertRowIndexToModel(selectedRow);
-                    Author selectedAuthor = repository.findAllAuthors().get(modelRow);
-                    if (!selectedAuthor.books().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "A szerzőnek vannak könyvei, ezért nem törölhető!");
-                        return;
-                    }
+                    String firstName = (String) tableModel.getValueAt(modelRow, 0);
+                    String lastName = (String) tableModel.getValueAt(modelRow, 1);
+                    Author selectedAuthor = Author.fromEntity(repository.findAuthorByName(firstName, lastName)
+                            .orElseThrow(() -> new IllegalArgumentException("Author not found")));
                     sidePanel.setData(selectedAuthor);
                 }
             }
@@ -102,5 +105,18 @@ public class AuthorsScreen extends JPanel {
             }
         });
         return addButton;
+    }
+
+    private void removeAuthor(Author author) {
+        try {
+            if (!author.books().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "A szerzőnek vannak könyvei, ezért nem törölhető!");
+                return;
+            }
+            repository.removeAuthor(author.id());
+        } catch (AuthorNotFoundException e) {
+            logger.error("Error while removing author", e);
+            JOptionPane.showMessageDialog(null, "Hiba történt a szerző törlése közben!");
+        }
     }
 }

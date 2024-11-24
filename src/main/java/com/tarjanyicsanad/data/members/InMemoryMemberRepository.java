@@ -30,6 +30,14 @@ public class InMemoryMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Member findMemberByEmail(String email) throws MemberNotFoundException {
+        return members.stream()
+                .filter(member -> member.email().equals(email))
+                .findFirst()
+                .orElseThrow(() -> new MemberNotFoundException("Member with email " + email + " not found"));
+    }
+
+    @Override
     public List<Member> findAllMembers() {
         return members;
     }

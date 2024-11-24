@@ -38,6 +38,14 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
+    public Book findBookByTitle(String title) throws BookNotFoundException {
+        return books.stream()
+                .filter(book -> book.title().equals(title))
+                .findFirst()
+                .orElseThrow(() -> new BookNotFoundException("Book with title " + title + " not found"));
+    }
+
+    @Override
     public List<Book> findAllBooks() {
         return books;
     }

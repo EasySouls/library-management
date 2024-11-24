@@ -8,11 +8,15 @@ import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * JPA implementation of the {@link BookRepository}.
+ */
 public class JpaBookRepository
         extends BaseRepository<BookEntity, Integer, BookNotFoundException>
         implements BookRepository {
@@ -23,6 +27,19 @@ public class JpaBookRepository
     public JpaBookRepository(EntityManager entityManager, AuthorRepository authorRepository) {
         super(entityManager, BookEntity.class);
         this.authorRepository = authorRepository;
+    }
+
+    @Override
+    public Book findBookByTitle(String title) throws BookNotFoundException {
+        try {
+            BookEntity entity = entityManager.createQuery(
+                            "SELECT a FROM books a WHERE a.title = :title", BookEntity.class)
+                    .setParameter("title", title)
+                    .getSingleResult();
+            return Book.fromEntity(entity);
+        } catch (NoResultException e) {
+            throw new BookNotFoundException("Book with title " + title + " not found");
+        }
     }
 
     @Override

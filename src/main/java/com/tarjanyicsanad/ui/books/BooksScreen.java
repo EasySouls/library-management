@@ -19,8 +19,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
+/**
+ * A panel that displays a table of books and allows the user to add and remove books.
+ */
 public class BooksScreen extends JPanel {
 
     private final JTextField titleField;
@@ -52,11 +54,8 @@ public class BooksScreen extends JPanel {
                 int selectedRow = booksTable.getSelectedRow();
                 if (selectedRow != -1) {
                     int modelRow = booksTable.convertRowIndexToModel(selectedRow);
-                    Optional<Book> selectedBookOpt = bookRepository.getBook(modelRow);
-                    if (selectedBookOpt.isEmpty()) {
-                        return;
-                    }
-                    Book selectedBook = selectedBookOpt.get();
+                    String title = (String) tableModel.getValueAt(modelRow, 0);
+                    Book selectedBook = bookRepository.findBookByTitle(title);
                     sidePanel.setData(selectedBook);
                 }
             }

@@ -21,6 +21,13 @@ public interface MemberRepository {
     Optional<Member> getMember(int id);
 
     /**
+     * Returns a member with the given email.
+     * @param email the email of the member to return
+     * @throws MemberNotFoundException if no member with the given email is found
+     */
+    Member findMemberByEmail(String email) throws MemberNotFoundException;
+
+    /**
      * Get all members from the repository
      * @return a list of all members
      */

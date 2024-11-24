@@ -1,5 +1,6 @@
 package com.tarjanyicsanad.data.books;
 
+import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.domain.model.Book;
@@ -42,6 +43,21 @@ public class DatabaseBookRepository implements BookRepository {
             bookEntity.set(session.find(BookEntity.class, id))
         );
         return Optional.ofNullable(bookEntity.get()).map(Book::fromEntity);
+    }
+
+    @Override
+    public Book findBookByTitle(String title) throws BookNotFoundException {
+        AtomicReference<BookEntity> bookEntity = new AtomicReference<>();
+        sessionFactory.inTransaction(session -> {
+            try {
+                bookEntity.set(session.createQuery("SELECT b FROM books b WHERE b.title = :title", BookEntity.class)
+                        .setParameter("title", title)
+                        .getSingleResult());
+            } catch (Exception e) {
+                throw new BookNotFoundException("Book not found with title: " + title);
+            }
+        });
+        return Book.fromEntity(bookEntity.get());
     }
 
     @Override

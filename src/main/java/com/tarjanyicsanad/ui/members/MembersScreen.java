@@ -33,11 +33,8 @@ public class MembersScreen extends JPanel {
                 int selectedRow = membersTable.getSelectedRow();
                 if (selectedRow != -1) {
                     int modelRow = membersTable.convertRowIndexToModel(selectedRow);
-                    Optional<Member> selectedMemberOpt = memberRepository.getMember(modelRow);
-                    if (selectedMemberOpt.isEmpty()) {
-                        return;
-                    }
-                    Member selectedMember = selectedMemberOpt.get();
+                    String email = (String) tableModel.getValueAt(modelRow, 1);
+                    Member selectedMember = memberRepository.findMemberByEmail(email);
                     sidePanel.setData(selectedMember);
                 }
             }

@@ -39,8 +39,8 @@ public class AuthorsTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         return switch (columnIndex) {
-            case 0 -> authorRepository.findAllAuthors().get(rowIndex).lastName();
-            case 1 -> authorRepository.findAllAuthors().get(rowIndex).firstName();
+            case 0 -> authorRepository.findAllAuthors().get(rowIndex).firstName();
+            case 1 -> authorRepository.findAllAuthors().get(rowIndex).lastName();
             case 2 -> authorRepository.findAllAuthors().get(rowIndex).dateOfBirth();
             default -> null;
         };
@@ -49,8 +49,8 @@ public class AuthorsTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int columnIndex) {
         return switch (columnIndex) {
-            case 0 -> "Vezetéknév";
-            case 1 -> "Keresztnév";
+            case 0 -> "Keresztnév";
+            case 1 -> "Vezetéknév";
             case 2 -> "Születési dátum";
             default -> "Egyéb";
         };

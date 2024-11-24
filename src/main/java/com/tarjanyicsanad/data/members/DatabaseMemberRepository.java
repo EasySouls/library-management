@@ -1,6 +1,7 @@
 package com.tarjanyicsanad.data.members;
 
 import com.tarjanyicsanad.data.members.entities.MemberEntity;
+import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 import org.hibernate.SessionFactory;
@@ -43,6 +44,21 @@ public class DatabaseMemberRepository implements MemberRepository {
                 memberEntity.set(session.find(MemberEntity.class, id))
         );
         return Optional.ofNullable(memberEntity.get()).map(Member::fromEntity);
+    }
+
+    @Override
+    public Member findMemberByEmail(String email) throws MemberNotFoundException {
+        AtomicReference<MemberEntity> memberEntity = new AtomicReference<>();
+        sessionFactory.inTransaction(session -> {
+            try {
+                memberEntity.set(session.createQuery("SELECT m FROM members m WHERE m.email = :email", MemberEntity.class)
+                        .setParameter("email", email)
+                        .getSingleResult());
+            } catch (Exception e) {
+                throw new MemberNotFoundException("Member not found with email: " + email);
+            }
+        });
+        return Member.fromEntity(memberEntity.get());
     }
 
     @Override
