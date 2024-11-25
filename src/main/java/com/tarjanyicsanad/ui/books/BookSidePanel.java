@@ -2,7 +2,6 @@ package com.tarjanyicsanad.ui.books;
 
 import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.model.Loan;
-import com.tarjanyicsanad.domain.repository.LoanRepository;
 import com.tarjanyicsanad.ui.DateFieldKeyAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,15 +9,15 @@ import org.apache.logging.log4j.util.TriConsumer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.sql.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * A panel that displays the details of a {@link Book} and allows the user to delete it.
+ */
 public class BookSidePanel extends JPanel {
     private final JTextField titleField;
     private final JTextArea descriptionArea;

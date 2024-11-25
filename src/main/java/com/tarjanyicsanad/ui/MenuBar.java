@@ -2,6 +2,9 @@ package com.tarjanyicsanad.ui;
 
 import javax.swing.*;
 
+/**
+ * A menu bar extending {@link JMenuBar} for the application.
+ */
 public class MenuBar extends JMenuBar {
 
     public MenuBar(LayoutChanger layoutChanger, Runnable saveAction, Runnable loadAction) {

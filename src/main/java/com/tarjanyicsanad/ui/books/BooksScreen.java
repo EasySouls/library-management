@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * A panel that displays a table of books and allows the user to add and remove books.
+ * A panel that displays a table of {@link Book}s and allows the user to add and remove books.
  */
 public class BooksScreen extends JPanel {
 

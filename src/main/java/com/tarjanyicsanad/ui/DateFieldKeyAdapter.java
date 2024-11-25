@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Implementation of a {@link KeyAdapter} that restricts the input of a {@link JTextField} to a date format.
+ */
 public class DateFieldKeyAdapter extends KeyAdapter {
     @Override
     public void keyTyped(KeyEvent e) {

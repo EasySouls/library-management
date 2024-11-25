@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A table model for displaying {@link Book}s in a {@link javax.swing.JTable}.
+ */
 public class BooksTableModel extends AbstractTableModel {
 
     private final transient BookRepository bookRepository;

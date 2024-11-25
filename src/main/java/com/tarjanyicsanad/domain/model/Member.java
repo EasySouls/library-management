@@ -38,9 +38,8 @@ public record Member(
     public static Member fromEntity(MemberEntity entity) {
 
         Set<Loan> loans = entity.getLoans().stream()
-                .map(Loan::fromEntityShallow)
+                .map(Loan::fromEntity)
                 .collect(Collectors.toCollection(HashSet::new));
-//        loans = Collections.unmodifiableSet(loans);
         return new Member(entity.getId(), entity.getName(), entity.getEmail(), entity.getJoinedAt(), loans);
     }
 

@@ -7,6 +7,9 @@ import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * A table model for displaying {@link Author}s in a {@link javax.swing.JTable}.
+ */
 public class AuthorsTableModel extends AbstractTableModel {
 
     private final transient AuthorRepository authorRepository;

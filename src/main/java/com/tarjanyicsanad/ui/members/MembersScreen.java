@@ -8,8 +8,10 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Optional;
 
+/**
+ * A panel that displays a table of {@link Member}s and allows the user to delete them.
+ */
 public class MembersScreen extends JPanel {
 
     public MembersScreen(MemberRepository memberRepository) {

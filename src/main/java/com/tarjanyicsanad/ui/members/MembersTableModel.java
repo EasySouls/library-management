@@ -7,6 +7,9 @@ import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ * A table model for displaying {@link Member}s in a {@link javax.swing.JTable}.
+ */
 public class MembersTableModel extends AbstractTableModel {
 
     private final transient MemberRepository memberRepository;

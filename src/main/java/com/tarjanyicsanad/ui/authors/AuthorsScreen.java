@@ -17,6 +17,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 
+/**
+ * Screen displaying a table of {@link Author}s and a side panel for adding and removing authors.
+ */
 public class AuthorsScreen extends JPanel {
     private final JTextField firstNameField;
     private final JTextField lastNameField;
