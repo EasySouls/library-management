@@ -4,10 +4,13 @@ package com.tarjanyicsanad.ui.books;
 import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.model.Loan;
 import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.LoanRepository;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
+import com.tarjanyicsanad.ui.DateFieldKeyAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,8 +18,6 @@ import javax.inject.Inject;
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * A panel that displays a table of books and allows the user to add and remove books.
@@ -41,12 +43,16 @@ public class BooksScreen extends JPanel {
 
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
-
+    private final LoanRepository loanRepository;
 
     @Inject
-    public BooksScreen(BookRepository bookRepository, AuthorRepository authorRepository, MemberRepository memberRepository) {
+    public BooksScreen(BookRepository bookRepository,
+                       AuthorRepository authorRepository,
+                       MemberRepository memberRepository,
+                       LoanRepository loanRepository) {
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
+        this.loanRepository = loanRepository;
 
         setLayout(new BorderLayout());
 
@@ -61,7 +67,8 @@ public class BooksScreen extends JPanel {
 
         BookSidePanel sidePanel = new BookSidePanel(
                 book -> tableModel.removeBook(book.id()),
-                this::onNewLoan
+                this::onNewLoan,
+                this::getLoansByBookTitle
         );
         add(sidePanel, BorderLayout.EAST);
 
@@ -87,19 +94,7 @@ public class BooksScreen extends JPanel {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         releaseYearField = new JFormattedTextField(df);
         releaseYearField.setColumns(10);
-        releaseYearField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!((c >= '0') && (c <= '9') ||
-                        (c == KeyEvent.VK_BACK_SPACE) ||
-                        (c == KeyEvent.VK_DELETE) || (c == KeyEvent.VK_MINUS)))
-                {
-                    JOptionPane.showMessageDialog(null, "Kérlek YYYY-MM-DD formátumban add meg az évszámot!");
-                    e.consume();
-                }
-            }
-        });
+        releaseYearField.addKeyListener(new DateFieldKeyAdapter());
         JButton addButton = getSaveNewBookButton(tableModel);
 
         addBookPanel.add(new JLabel("Cím:"));
@@ -149,5 +144,10 @@ public class BooksScreen extends JPanel {
             logger.error("Error while adding loan", e);
             JOptionPane.showMessageDialog(null, "Hiba történt a kölcsönzés hozzáadása közben!");
         }
+    }
+
+    private Set<Loan> getLoansByBookTitle(String title) {
+        Book book = bookRepository.findBookByTitle(title);
+        return loanRepository.findLoansByBookId(book.id());
     }
 }

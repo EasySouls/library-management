@@ -7,6 +7,7 @@ import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.LoanRepository;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 import com.tarjanyicsanad.ui.authors.AuthorsScreen;
 import com.tarjanyicsanad.ui.books.BooksScreen;
@@ -29,6 +30,7 @@ public class ApplicationFrame {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final MemberRepository memberRepository;
+    private final LoanRepository loanRepository;
 
     private static final Logger logger = LogManager.getLogger(ApplicationFrame.class);
 
@@ -37,10 +39,12 @@ public class ApplicationFrame {
                             int height,
                             BookRepository bookRepository,
                             AuthorRepository authorRepository,
-                            MemberRepository memberRepository) {
+                            MemberRepository memberRepository,
+                            LoanRepository loanRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.memberRepository = memberRepository;
+        this.loanRepository = loanRepository;
 
         /// If the user wants to load the data from the file,
         /// and the preferred storage mode is not database, then load it
@@ -71,12 +75,12 @@ public class ApplicationFrame {
         frame.setSize(width, height);
 
         CardLayout screensLayout = new CardLayout();
-        screensLayout.addLayoutComponent(new BooksScreen(bookRepository, authorRepository, memberRepository), Screens.BOOKS);
+        screensLayout.addLayoutComponent(new BooksScreen(bookRepository, authorRepository, memberRepository, loanRepository), Screens.BOOKS);
         screensLayout.addLayoutComponent(new AuthorsScreen(authorRepository), Screens.AUTHORS);
         screensLayout.addLayoutComponent(new MembersScreen(memberRepository), Screens.MEMBERS);
 
         JPanel screens = new JPanel(screensLayout);
-        screens.add(new BooksScreen(bookRepository, authorRepository, memberRepository), Screens.BOOKS);
+        screens.add(new BooksScreen(bookRepository, authorRepository, memberRepository, loanRepository), Screens.BOOKS);
         screens.add(new AuthorsScreen(authorRepository), Screens.AUTHORS);
         screens.add(new MembersScreen(memberRepository), Screens.MEMBERS);
 

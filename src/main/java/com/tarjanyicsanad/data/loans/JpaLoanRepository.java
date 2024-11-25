@@ -11,9 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * JPA implementation of the {@link LoanRepository} interface.
@@ -44,6 +46,21 @@ public class JpaLoanRepository
         Set<Loan> loans = new HashSet<>();
         super.findAll().forEach(loanEntity -> loans.add(Loan.fromEntity(loanEntity)));
         return loans;
+    }
+
+    @Override
+    public Set<Loan> findLoansByBookId(int bookId) {
+        try {
+            return entityManager.createQuery("SELECT l FROM loans l WHERE l.book.id = :bookId", LoanEntity.class)
+                    .setParameter("bookId", bookId)
+                    .getResultList()
+                    .stream()
+                    .map(Loan::fromEntity)
+                    .collect(Collectors.toSet());
+        } catch (Exception e) {
+            logger.error("Failed to find loans by book id", e);
+            return Collections.emptySet();
+        }
     }
 
     @Override

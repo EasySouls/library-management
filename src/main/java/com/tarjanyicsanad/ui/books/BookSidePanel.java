@@ -1,12 +1,22 @@
 package com.tarjanyicsanad.ui.books;
 
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.model.Loan;
+import com.tarjanyicsanad.domain.repository.LoanRepository;
+import com.tarjanyicsanad.ui.DateFieldKeyAdapter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.TriConsumer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.function.BiConsumer;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BookSidePanel extends JPanel {
     private final JTextField titleField;
@@ -15,15 +25,22 @@ public class BookSidePanel extends JPanel {
     private final JTextField publishingDateField;
 
     private JTextField loanMemberEmailField;
-    private JTextField loanBookNameField;
+    private JFormattedTextField returnDateField;
     JList<String> existingLoansList;
 
     private Book book;
 
     private final transient TriConsumer<String, String, String> onNewLoan;
+    private final transient Function<String, Set<Loan>> getLoansByBookTitle;
 
-    public BookSidePanel(Consumer<Book> onDelete, TriConsumer<String, String, String> onNewLoan) {
+    private static final Logger logger = LogManager.getLogger(BookSidePanel.class);
+
+
+    public BookSidePanel(Consumer<Book> onDelete,
+                         TriConsumer<String, String, String> onNewLoan,
+                         Function<String, Set<Loan>> getLoansByBookTitle) {
         this.onNewLoan = onNewLoan;
+        this.getLoansByBookTitle = getLoansByBookTitle;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(400, 0));
 
@@ -85,7 +102,8 @@ public class BookSidePanel extends JPanel {
         authorField.setText(book.author().fullName());
         publishingDateField.setText(book.publishingDate().toString());
 
-        existingLoansList.setListData(book.loans().stream()
+        Set<Loan> loans = getLoansByBookTitle.apply(book.title());
+        existingLoansList.setListData(loans.stream()
                 .map(loan -> loan.member().name() + ", " + loan.loanedAt() + " - " + loan.returnDate())
                 .toArray(String[]::new));
     }
@@ -100,12 +118,15 @@ public class BookSidePanel extends JPanel {
         loansPanel.add(existingLoansList);
 
         newLoanPanel = new JPanel();
-        loanBookNameField = new JTextField(6);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        returnDateField = new JFormattedTextField(df);
+        returnDateField.setColumns(10);
+        returnDateField.addKeyListener(new DateFieldKeyAdapter());
         loanMemberEmailField = new JTextField(6);
-        newLoanPanel.add(new JLabel("Könyv címe"));
-        newLoanPanel.add(loanBookNameField);
         newLoanPanel.add(new JLabel("Tag email címe"));
         newLoanPanel.add(loanMemberEmailField);
+        newLoanPanel.add(new JLabel("Visszahozás dátuma"));
+        newLoanPanel.add(returnDateField);
         JButton addNewLoanButton = new JButton("Új kölcsönzés");
         addNewLoanButton.addActionListener(_ -> addNewLoan());
         newLoanPanel.add(addNewLoanButton);
@@ -116,13 +137,14 @@ public class BookSidePanel extends JPanel {
 
     private void addNewLoan() {
         String memberEmail = loanMemberEmailField.getText();
-        String bookName = loanBookNameField.getText();
-        String returnDate = JOptionPane.showInputDialog("Add meg a visszaadás dátumát (YYYY-MM-DD):");
+        String bookName = titleField.getText();
+        String returnDate = returnDateField.getText();
+        logger.info("New loan for book {} by user {}", bookName, memberEmail);
         if (memberEmail.isEmpty() || bookName.isEmpty()) {
             JOptionPane.showMessageDialog(this, "A tag email címe és a könyv címe nem lehet üres!");
             return;
         }
 
-        onNewLoan.accept(memberEmail, bookName, returnDate);
+        onNewLoan.accept(bookName, memberEmail, returnDate);
     }
 }

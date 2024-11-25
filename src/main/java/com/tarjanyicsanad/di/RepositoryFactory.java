@@ -2,6 +2,7 @@ package com.tarjanyicsanad.di;
 
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.LoanRepository;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 import dagger.Component;
 import jakarta.persistence.EntityManager;
@@ -21,5 +22,6 @@ public interface RepositoryFactory {
     BookRepository bookRepository();
     AuthorRepository authorRepository();
     MemberRepository memberRepository();
+    LoanRepository loanRepository();
     EntityManager entityManager();
 }

@@ -39,9 +39,12 @@ public record Book(
     public BookEntity toEntity() {
         // Convert loans fully but avoid recursive author conversion
         Set<LoanEntity> loanEntities = loans.stream()
-                .map(Loan::toEntity)
+                .map(Loan::toEntityShallow)
                 .collect(Collectors.toSet());
-        return new BookEntity(title, description, author.toEntityShallow(), loanEntities, publishingDate);
+
+        BookEntity entity = new BookEntity(title, description, author.toEntityShallow(), loanEntities, publishingDate);
+        entity.setId(id);
+        return entity;
     }
 
     /**
@@ -54,7 +57,7 @@ public record Book(
         // Convert author shallowly to avoid recursion
         Author author = Author.fromEntityShallow(entity.getAuthor());
         Set<Loan> loans = entity.getLoans().stream()
-                .map(Loan::fromEntity)
+                .map(Loan::fromEntityShallow)
                 .collect(Collectors.toSet());
         return new Book(entity.getId(), entity.getTitle(), entity.getDescription(), author, loans, entity.getPublishingDate());
     }
@@ -67,7 +70,10 @@ public record Book(
      */
     public static Book fromEntityShallow(BookEntity entity) {
         // Create a Book without converting loans or deeply converting author
-        Author author = Author.fromEntityShallow(entity.getAuthor());
-        return new Book(entity.getId(), entity.getTitle(), entity.getDescription(), author, Collections.emptySet(), entity.getPublishingDate());
+//        Author author = Author.fromEntityShallow(entity.getAuthor());
+//        Set<Loan> loans = entity.getLoans().stream()
+//                .map(Loan::fromEntityShallow)
+//                .collect(Collectors.toSet());
+        return new Book(entity.getId(), entity.getTitle(), entity.getDescription(), null, null, entity.getPublishingDate());
     }
 }

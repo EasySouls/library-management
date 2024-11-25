@@ -5,6 +5,7 @@ import com.tarjanyicsanad.domain.repository.LoanRepository;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * An in-memory implementation of the {@link LoanRepository} interface.
@@ -36,6 +37,13 @@ public class InMemoryLoanRepository implements LoanRepository {
     @Override
     public Set<Loan> findAllLoans() {
         return loans;
+    }
+
+    @Override
+    public Set<Loan> findLoansByBookId(int bookId) {
+        return loans.stream()
+                .filter(loan -> loan.book().id() == bookId)
+                .collect(Collectors.toSet());
     }
 
     @Override

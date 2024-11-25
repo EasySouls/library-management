@@ -27,9 +27,13 @@ public record Loan(
      * @throws IllegalArgumentException if the return date is before the loan date.
      */
     public Loan {
-        if (loanedAt.isAfter(returnDate)) {
-            throw new IllegalArgumentException("Return date must be after loan date");
-        }
+        // Ensure the return date is after the loan date
+        // If the loanedAt or returnDate is null, the check is skipped, since when we
+        // shallow copy the loans we will have null values for these fields
+        if (loanedAt != null && returnDate != null && loanedAt.isAfter(returnDate)) {
+               throw new IllegalArgumentException("Return date must be after loan date");
+           }
+
     }
 
     /**
@@ -65,7 +69,7 @@ public record Loan(
      * @return a LoanEntity representing this Loan.
      */
     public LoanEntity toEntityShallow() {
-        return new LoanEntity(book.toEntity(), null, loanedAt, returnDate);
+        return new LoanEntity(null, null, loanedAt, returnDate);
     }
 
     /**
@@ -86,7 +90,7 @@ public record Loan(
     public static Loan fromEntity(LoanEntity entity) {
         return new Loan(entity.getId(),
                 Book.fromEntityShallow(entity.getBook()),
-                Member.fromEntity(entity.getMember()),
+                Member.fromEntityShallow(entity.getMember()),
                 entity.getLoanedAt(),
                 entity.getReturnDate());
     }
@@ -98,9 +102,10 @@ public record Loan(
      * @return a Loan representing the given LoanEntity.
      */
     public static Loan fromEntityShallow(LoanEntity entity) {
-        return new Loan(entity.getId(),
-                Book.fromEntityShallow(entity.getBook()),
-                Member.fromEntityShallow(entity.getMember()),
+        return new Loan(
+                entity.getId(),
+                null,
+                null,
                 entity.getLoanedAt(),
                 entity.getReturnDate());
     }

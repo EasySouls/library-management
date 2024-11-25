@@ -85,7 +85,10 @@ public class JpaBookRepository
 
             // Fetch the book and member
             BookEntity book = entityManager.find(BookEntity.class, bookId);
-            MemberEntity member = entityManager.find(MemberEntity.class, memberEmail);
+            MemberEntity member = entityManager.createQuery(
+                            "SELECT m FROM members m WHERE m.email = :email", MemberEntity.class)
+                    .setParameter("email", memberEmail)
+                    .getSingleResult();
 
             if (book == null || member == null) {
                 throw new IllegalArgumentException("Book or Member not found");
@@ -113,6 +116,7 @@ public class JpaBookRepository
 
             // Persist changes
             entityManager.merge(book);
+            entityManager.merge(loan);
 
             transaction.commit();
         } catch (Exception e) {

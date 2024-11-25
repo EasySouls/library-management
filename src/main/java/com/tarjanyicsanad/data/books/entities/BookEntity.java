@@ -71,6 +71,10 @@ public class BookEntity {
         return publishingDate;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setLoans(Set<LoanEntity> loan) {
         this.loans = loan;
     }

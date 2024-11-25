@@ -30,6 +30,13 @@ public interface LoanRepository {
     Set<Loan> findAllLoans();
 
     /**
+     * Get all loans with the given book id from the repository
+     * @param bookId the id of the book to get loans for
+     * @return a set of all loans with the given book id
+     */
+    Set<Loan> findLoansByBookId(int bookId);
+
+    /**
      * Remove a loan from the repository
      * @param id the id of the loan to remove
      * @throws LoanNotFoundException if the loan with the given id is not found
