@@ -134,7 +134,7 @@ public class BooksScreen extends JPanel {
         LocalDate returnDateParsed = LocalDate.parse(returnDate);
         try {
             Member member = memberRepository.findMemberByEmail(memberEmail);
-            BookEntity book = bookRepository.findBookByTitle(bookName).toEntity();
+            BookEntity book = bookRepository.findBookByTitle(bookName).toEntityWithId();
             bookRepository.addLoanToBook(book.getId(), member.email(), returnDateParsed);
             tableModel.fireTableDataChanged();
         } catch (MemberNotFoundException e) {

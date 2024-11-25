@@ -25,7 +25,6 @@ public class BooksTableModel extends AbstractTableModel {
         String lastName = authorName.split(" ")[0];
         String firstName = authorName.split(" ")[1];
 
-
         Author author = Author.fromEntity(authorRepository.findAuthorByName(firstName, lastName)
                 .orElseThrow());
         // We set the author to null because the author needs to be a persisted entity,

@@ -78,7 +78,7 @@ public record Loan(
      * @return a LoanEntity representing this Loan.
      */
     public LoanEntity toEntity() {
-        return new LoanEntity(book.toEntity(), member.toEntity(), loanedAt, returnDate);
+        return new LoanEntity(book.toEntityWithId(), member.toEntity(), loanedAt, returnDate);
     }
 
     /**

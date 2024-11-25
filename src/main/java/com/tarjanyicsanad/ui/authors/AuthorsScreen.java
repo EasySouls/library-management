@@ -24,13 +24,12 @@ public class AuthorsScreen extends JPanel {
 
     private static final Logger logger = LogManager.getLogger(AuthorsScreen.class);
 
-    private final AuthorRepository repository;
+    private final AuthorsTableModel tableModel;
 
     public AuthorsScreen(AuthorRepository repository) {
-        this.repository = repository;
         setLayout(new BorderLayout());
 
-        AuthorsTableModel tableModel = new AuthorsTableModel(repository);
+        tableModel = new AuthorsTableModel(repository);
 
         JTable authorsTable = new JTable();
         authorsTable.setModel(tableModel);
@@ -113,7 +112,7 @@ public class AuthorsScreen extends JPanel {
                 JOptionPane.showMessageDialog(null, "A szerzőnek vannak könyvei, ezért nem törölhető!");
                 return;
             }
-            repository.removeAuthor(author.id());
+            tableModel.removeAuthor(author.id());
         } catch (AuthorNotFoundException e) {
             logger.error("Error while removing author", e);
             JOptionPane.showMessageDialog(null, "Hiba történt a szerző törlése közben!");

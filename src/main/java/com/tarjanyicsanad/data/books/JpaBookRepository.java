@@ -13,6 +13,8 @@ import com.tarjanyicsanad.domain.repository.BookRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -28,6 +30,8 @@ public class JpaBookRepository
         implements BookRepository {
 
     private final AuthorRepository authorRepository;
+
+    private static final Logger logger = LogManager.getLogger(JpaBookRepository.class);
 
     @Inject
     public JpaBookRepository(EntityManager entityManager, AuthorRepository authorRepository) {
@@ -74,7 +78,23 @@ public class JpaBookRepository
         if (bookEntity == null) {
             throw new BookNotFoundException("Book with " + id + " not found");
         }
-        super.delete(bookEntity);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.createQuery("DELETE FROM books b WHERE b.id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+
+            // Delete all loans associated with the book
+            entityManager.createQuery("DELETE FROM loans l WHERE l.book.id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) transaction.rollback();
+            logger.error("Error while removing book", e);
+            throw e;
+        }
     }
 
     @Override

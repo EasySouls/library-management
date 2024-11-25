@@ -42,7 +42,16 @@ public record Book(
                 .map(Loan::toEntityShallow)
                 .collect(Collectors.toSet());
 
-        BookEntity entity = new BookEntity(title, description, author.toEntityShallow(), loanEntities, publishingDate);
+        return new BookEntity(title, description, author.toEntityShallow(), loanEntities, publishingDate);
+    }
+
+    /**
+     * Converts this book to a BookEntity, including loans and setting the id.
+     *
+     * @return a BookEntity with loans and an id.
+     */
+    public BookEntity toEntityWithId() {
+        BookEntity entity = toEntity();
         entity.setId(id);
         return entity;
     }
