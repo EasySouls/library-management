@@ -1,9 +1,13 @@
 package com.tarjanyicsanad.ui.books;
 
 
+import com.tarjanyicsanad.data.books.entities.BookEntity;
+import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.MemberRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 /**
@@ -32,11 +37,20 @@ public class BooksScreen extends JPanel {
 
     private static final Logger logger = LogManager.getLogger(BooksScreen.class);
 
+    private final BooksTableModel tableModel;
+
+    private final BookRepository bookRepository;
+    private final MemberRepository memberRepository;
+
+
     @Inject
-    public BooksScreen(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BooksScreen(BookRepository bookRepository, AuthorRepository authorRepository, MemberRepository memberRepository) {
+        this.bookRepository = bookRepository;
+        this.memberRepository = memberRepository;
+
         setLayout(new BorderLayout());
 
-        BooksTableModel tableModel = new BooksTableModel(bookRepository, authorRepository);
+        tableModel = new BooksTableModel(bookRepository, authorRepository);
 
         JTable booksTable = new JTable();
         booksTable.setModel(tableModel);
@@ -45,7 +59,10 @@ public class BooksScreen extends JPanel {
 
         add(new JScrollPane(booksTable));
 
-        BookSidePanel sidePanel = new BookSidePanel(book -> tableModel.removeBook(book.id()));
+        BookSidePanel sidePanel = new BookSidePanel(
+                book -> tableModel.removeBook(book.id()),
+                this::onNewLoan
+        );
         add(sidePanel, BorderLayout.EAST);
 
         booksTable.addMouseListener(new MouseAdapter() {
@@ -115,5 +132,22 @@ public class BooksScreen extends JPanel {
             }
         });
         return addButton;
+    }
+
+    private void onNewLoan(String bookName, String memberEmail, String returnDate) {
+        logger.info("New loan for book {} by user {}", bookName, memberEmail);
+        LocalDate returnDateParsed = LocalDate.parse(returnDate);
+        try {
+            Member member = memberRepository.findMemberByEmail(memberEmail);
+            BookEntity book = bookRepository.findBookByTitle(bookName).toEntity();
+            bookRepository.addLoanToBook(book.getId(), member.email(), returnDateParsed);
+            tableModel.fireTableDataChanged();
+        } catch (MemberNotFoundException e) {
+            logger.error("Member not found while adding loan", e);
+            JOptionPane.showMessageDialog(null, "Nem található ilyen tag!");
+        }catch (Exception e) {
+            logger.error("Error while adding loan", e);
+            JOptionPane.showMessageDialog(null, "Hiba történt a kölcsönzés hozzáadása közben!");
+        }
     }
 }

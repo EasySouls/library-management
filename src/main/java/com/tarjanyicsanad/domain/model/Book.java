@@ -5,7 +5,6 @@ import com.tarjanyicsanad.data.loans.entities.LoanEntity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,7 +38,7 @@ public record Book(
      */
     public BookEntity toEntity() {
         // Convert loans fully but avoid recursive author conversion
-        Collection<LoanEntity> loanEntities = loans.stream()
+        Set<LoanEntity> loanEntities = loans.stream()
                 .map(Loan::toEntity)
                 .collect(Collectors.toSet());
         return new BookEntity(title, description, author.toEntityShallow(), loanEntities, publishingDate);
@@ -54,7 +53,7 @@ public record Book(
     public static Book fromEntity(BookEntity entity) {
         // Convert author shallowly to avoid recursion
         Author author = Author.fromEntityShallow(entity.getAuthor());
-        Set<Loan> loans = entity.getLoan().stream()
+        Set<Loan> loans = entity.getLoans().stream()
                 .map(Loan::fromEntity)
                 .collect(Collectors.toSet());
         return new Book(entity.getId(), entity.getTitle(), entity.getDescription(), author, loans, entity.getPublishingDate());

@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "books")
 public class BookEntity {
@@ -28,7 +28,7 @@ public class BookEntity {
     private AuthorEntity author;
 
     @OneToMany(mappedBy = LoanEntity_.BOOK)
-    private Collection<LoanEntity> loan = new HashSet<>();
+    private Set<LoanEntity> loans = new HashSet<>();
 
     @Basic(optional = false)
     private LocalDate publishingDate;
@@ -38,12 +38,12 @@ public class BookEntity {
     public BookEntity(String title,
                       String description,
                       AuthorEntity author,
-                      Collection<LoanEntity> loans,
+                      Set<LoanEntity> loans,
                       LocalDate publishingDate) {
         this.title = title;
         this.description = description;
         this.author = author;
-        this.loan = loans;
+        this.loans = loans;
         this.publishingDate = publishingDate;
     }
 
@@ -63,16 +63,16 @@ public class BookEntity {
         return author;
     }
 
-    public Collection<LoanEntity> getLoan() {
-        return loan;
+    public Set<LoanEntity> getLoans() {
+        return loans;
     }
 
     public LocalDate getPublishingDate() {
         return publishingDate;
     }
 
-    public void setLoan(Collection<LoanEntity> loan) {
-        this.loan = loan;
+    public void setLoans(Set<LoanEntity> loan) {
+        this.loans = loan;
     }
 
     public void setAuthor(AuthorEntity author) {

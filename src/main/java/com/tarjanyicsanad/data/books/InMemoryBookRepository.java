@@ -2,9 +2,14 @@ package com.tarjanyicsanad.data.books;
 
 import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.model.Loan;
+import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.BookRepository;
+import com.tarjanyicsanad.domain.repository.LoanRepository;
+import com.tarjanyicsanad.domain.repository.MemberRepository;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +20,13 @@ import java.util.Optional;
 public class InMemoryBookRepository implements BookRepository {
     private final ArrayList<Book> books;
 
+    MemberRepository memberRepository;
+    LoanRepository loanRepository;
+
     @Inject
-    public InMemoryBookRepository(List<Book> books) {
+    public InMemoryBookRepository(List<Book> books, MemberRepository memberRepository, LoanRepository loanRepository) {
+        this.memberRepository = memberRepository;
+        this.loanRepository = loanRepository;
         this.books = books.isEmpty() ? new ArrayList<>() : new ArrayList<>(books);
     }
 
@@ -51,6 +61,16 @@ public class InMemoryBookRepository implements BookRepository {
     @Override
     public List<Book> findAllBooks() {
         return books;
+    }
+
+    @Override
+    public void addLoanToBook(int bookId, String memberEmail, LocalDate returnDate) throws IllegalArgumentException {
+        Book book = getBook(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("Book with id " + bookId + " not found"));
+        Member member = memberRepository.findMemberByEmail(memberEmail);
+        Loan loan = new Loan(0, book, member, LocalDate.now(), returnDate);
+        loanRepository.addLoan(loan);
+        book.loans().add(loan);
     }
 
     @Override

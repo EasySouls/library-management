@@ -4,7 +4,10 @@ import com.tarjanyicsanad.data.members.entities.MemberEntity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Represents a member with basic details such as name, email, and the date they joined.
@@ -33,9 +36,11 @@ public record Member(
      * @return a Member representing the given MemberEntity.
      */
     public static Member fromEntity(MemberEntity entity) {
+
         Set<Loan> loans = entity.getLoans().stream()
                 .map(Loan::fromEntityShallow)
-                .collect(Set::of, Set::add, Set::addAll);
+                .collect(Collectors.toCollection(HashSet::new));
+//        loans = Collections.unmodifiableSet(loans);
         return new Member(entity.getId(), entity.getName(), entity.getEmail(), entity.getJoinedAt(), loans);
     }
 

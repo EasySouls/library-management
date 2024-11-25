@@ -3,6 +3,7 @@ package com.tarjanyicsanad.domain.repository;
 import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,15 @@ public interface BookRepository {
      * @return a list of all books in the repository
      */
     List<Book> findAllBooks();
+
+    /**
+     * Adds a loan to the book with the given id.
+     * @param bookId the id of the book to add the loan to
+     * @param memberEmail the email of the member who borrowed the book
+     * @param returnDate the date the book should be returned
+     * @throws IllegalArgumentException if the parameters are invalid or the book is already borrowed
+     */
+    void addLoanToBook(int bookId, String memberEmail, LocalDate returnDate) throws IllegalArgumentException;
 
     /**
      * Updates the book with the same id as the given book.

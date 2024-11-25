@@ -71,12 +71,12 @@ public class ApplicationFrame {
         frame.setSize(width, height);
 
         CardLayout screensLayout = new CardLayout();
-        screensLayout.addLayoutComponent(new BooksScreen(bookRepository, authorRepository), Screens.BOOKS);
+        screensLayout.addLayoutComponent(new BooksScreen(bookRepository, authorRepository, memberRepository), Screens.BOOKS);
         screensLayout.addLayoutComponent(new AuthorsScreen(authorRepository), Screens.AUTHORS);
         screensLayout.addLayoutComponent(new MembersScreen(memberRepository), Screens.MEMBERS);
 
         JPanel screens = new JPanel(screensLayout);
-        screens.add(new BooksScreen(bookRepository, authorRepository), Screens.BOOKS);
+        screens.add(new BooksScreen(bookRepository, authorRepository, memberRepository), Screens.BOOKS);
         screens.add(new AuthorsScreen(authorRepository), Screens.AUTHORS);
         screens.add(new MembersScreen(memberRepository), Screens.MEMBERS);
 
