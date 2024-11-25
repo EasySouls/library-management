@@ -1,6 +1,5 @@
 package com.tarjanyicsanad.ui.books;
 
-
 import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
@@ -57,6 +56,15 @@ public class BooksScreen extends JPanel {
         setLayout(new BorderLayout());
 
         tableModel = new BooksTableModel(bookRepository, authorRepository);
+
+        JComboBox<BooksTableModel.FilterOption> filterComboBox = new JComboBox<>(BooksTableModel.FilterOption.values());
+        filterComboBox.addActionListener(e -> {
+            BooksTableModel.FilterOption selectedFilter = (BooksTableModel.FilterOption) filterComboBox.getSelectedItem();
+            assert selectedFilter != null;
+            tableModel.setFilter(selectedFilter);
+        });
+        filterComboBox.setPreferredSize(new Dimension(200, 30));
+        add(filterComboBox, BorderLayout.NORTH);
 
         JTable booksTable = new JTable();
         booksTable.setModel(tableModel);
@@ -140,7 +148,10 @@ public class BooksScreen extends JPanel {
         } catch (MemberNotFoundException e) {
             logger.error("Member not found while adding loan", e);
             JOptionPane.showMessageDialog(null, "Nem található ilyen tag!");
-        }catch (Exception e) {
+        } catch (IllegalArgumentException e) {
+            logger.error("Error while adding loan", e);
+            JOptionPane.showMessageDialog(null, "A könyvet már kikölcsönözte ez a személy!");
+        } catch (Exception e) {
             logger.error("Error while adding loan", e);
             JOptionPane.showMessageDialog(null, "Hiba történt a kölcsönzés hozzáadása közben!");
         }

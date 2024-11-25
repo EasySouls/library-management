@@ -2,12 +2,14 @@ package com.tarjanyicsanad.ui.books;
 
 import com.tarjanyicsanad.domain.model.Author;
 import com.tarjanyicsanad.domain.model.Book;
+import com.tarjanyicsanad.domain.model.Loan;
 import com.tarjanyicsanad.domain.repository.AuthorRepository;
 import com.tarjanyicsanad.domain.repository.BookRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class BooksTableModel extends AbstractTableModel {
@@ -15,9 +17,15 @@ public class BooksTableModel extends AbstractTableModel {
     private final transient BookRepository bookRepository;
     private final transient AuthorRepository authorRepository;
 
+    private List<Book> filteredBooks;
+    private FilterOption filter;
+
     public BooksTableModel(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+
+        this.filter = FilterOption.ALL;
+        applyFilter();
     }
 
     public void addBook(String title, String description, String authorName, String publishingDateString) {
@@ -30,17 +38,17 @@ public class BooksTableModel extends AbstractTableModel {
         // We set the author to null because the author needs to be a persisted entity,
         // so we add it later in the repository
         bookRepository.addBook(new Book(0, title, description, author, Set.of(), publishingDate));
-        fireTableDataChanged();
+        applyFilter();
     }
 
     public void removeBook(int id) {
         bookRepository.removeBook(id);
-        fireTableDataChanged();
+        applyFilter();
     }
 
     @Override
     public int getRowCount() {
-        return bookRepository.findAllBooks().size();
+        return filteredBooks.size();
     }
 
     @Override
@@ -50,11 +58,7 @@ public class BooksTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Optional<Book> bookOpt = Optional.ofNullable(bookRepository.findAllBooks().get(rowIndex));
-        if (bookOpt.isEmpty()) {
-            return null;
-        }
-        Book book = bookOpt.get();
+        Book book = filteredBooks.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> book.title();
             case 1 -> book.description();
@@ -83,4 +87,47 @@ public class BooksTableModel extends AbstractTableModel {
             default -> Integer.class;
         };
     }
+
+    public void setFilter(FilterOption filter) {
+        this.filter = filter;
+        applyFilter();
+    }
+
+    private void applyFilter() {
+        List<Book> books = bookRepository.findAllBooks();
+        filteredBooks = new ArrayList<>();
+        for (Book book : books) {
+            switch (filter) {
+                case FilterOption.ALL -> filteredBooks.add(book);
+                case LOANED -> {
+                    for (Loan loan : book.loans()) {
+                        if (loan.isLoaned()) {
+                            filteredBooks.add(book);
+                            break;
+                        }
+                    }
+                }
+                case NOT_LOANED -> {
+                    boolean isLoaned = false;
+                    for (Loan loan : book.loans()) {
+                        if (loan.isLoaned()) {
+                            isLoaned = true;
+                            break;
+                        }
+                    }
+                    if (!isLoaned) {
+                        filteredBooks.add(book);
+                    }
+                }
+            }
+            fireTableDataChanged();
+        }
+    }
+
+    public enum FilterOption {
+        ALL,
+        LOANED,
+        NOT_LOANED
+    }
 }
+

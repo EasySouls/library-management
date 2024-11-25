@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Set;
@@ -41,36 +42,43 @@ public class BookSidePanel extends JPanel {
                          Function<String, Set<Loan>> getLoansByBookTitle) {
         this.onNewLoan = onNewLoan;
         this.getLoansByBookTitle = getLoansByBookTitle;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(400, 0));
 
+
         JLabel titleLabel = new JLabel("Cím:");
-        add(titleLabel);
+        add(titleLabel, BorderLayout.LINE_START);
 
         titleField = new JTextField();
         titleField.setMaximumSize(new Dimension(400, 20));
         add(titleField);
+        add(Box.createVerticalStrut(10));
 
-        JLabel descriptionLabel = new JLabel("Leírás:");
-        add(descriptionLabel);
+        JLabel descriptionLabel = new JLabel("Leírás:", SwingConstants.LEFT);
+        descriptionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        add(descriptionLabel, BorderLayout.LINE_START);
 
         descriptionArea = new JTextArea();
         descriptionArea.setMaximumSize(new Dimension(400, 20));
         add(descriptionArea);
+        add(Box.createVerticalStrut(10));
 
-        JLabel authorLabel = new JLabel("Szerző:");
-        add(authorLabel);
+        JLabel authorLabel = new JLabel("Szerző:", SwingConstants.LEFT);
+        add(authorLabel, BorderLayout.LINE_START);
 
         authorField = new JTextField();
         authorField.setMaximumSize(new Dimension(400, 20));
         add(authorField);
+        add(Box.createVerticalStrut(10));
 
-        JLabel publishingDateLabel = new JLabel("Kiadás éve:");
-        add(publishingDateLabel);
+        JLabel publishingDateLabel = new JLabel("Kiadás éve:", SwingConstants.LEFT);
+        add(publishingDateLabel, BorderLayout.LINE_START);
 
         publishingDateField = new JTextField();
         publishingDateField.setMaximumSize(new Dimension(400, 20));
         add(publishingDateField);
+        add(Box.createVerticalStrut(10));
 
         JButton deleteButton = new JButton("Törlés");
         deleteButton.addActionListener(e -> {
@@ -85,6 +93,7 @@ public class BookSidePanel extends JPanel {
         authorField.setEditable(false);
         publishingDateField.setEditable(false);
 
+        add(Box.createVerticalStrut(30));
         add(loansPanel());
     }
 
@@ -103,6 +112,10 @@ public class BookSidePanel extends JPanel {
         publishingDateField.setText(book.publishingDate().toString());
 
         Set<Loan> loans = getLoansByBookTitle.apply(book.title());
+        if (loans.isEmpty()) {
+            existingLoansList.setListData(new String[]{"Nincs kölcsönzés"});
+            return;
+        }
         existingLoansList.setListData(loans.stream()
                 .map(loan -> loan.member().name() + ", " + loan.loanedAt() + " - " + loan.returnDate())
                 .toArray(String[]::new));
@@ -112,10 +125,13 @@ public class BookSidePanel extends JPanel {
         JPanel newLoanPanel;
         JPanel loansPanel = new JPanel();
 
+        loansPanel.setLayout(new BoxLayout(loansPanel, BoxLayout.Y_AXIS));
+        loansPanel.add(new JLabel("Kölcsönzések:"));
         existingLoansList = new JList<>();
         existingLoansList.setMaximumSize(new Dimension(400, 100));
-        existingLoansList.setListData(new String[0]);
+        existingLoansList.setListData(new String[]{"Nincs kölcsönzés"});
         loansPanel.add(existingLoansList);
+        loansPanel.add(Box.createVerticalStrut(30));
 
         newLoanPanel = new JPanel();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

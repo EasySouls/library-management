@@ -60,6 +60,9 @@ public record Loan(
      * @return true if the book is still loaned out, false otherwise.
      */
     public boolean isLoaned() {
+        if (returnDate == null || loanedAt == null) {
+            return false;
+        }
         return LocalDate.now().isBefore(returnDate);
     }
 

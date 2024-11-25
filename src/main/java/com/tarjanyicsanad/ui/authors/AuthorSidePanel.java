@@ -24,6 +24,7 @@ public class AuthorSidePanel extends JPanel {
         nameField = new JTextField();
         nameField.setMaximumSize(new Dimension(400, 20));
         add(nameField);
+        add(Box.createVerticalStrut(10));
 
         JLabel dateOfBirthLabel = new JLabel("Születési év:");
         add(dateOfBirthLabel);
@@ -31,6 +32,7 @@ public class AuthorSidePanel extends JPanel {
         dateOfBirthField = new JTextField();
         dateOfBirthField.setMaximumSize(new Dimension(400, 20));
         add(dateOfBirthField);
+        add(Box.createVerticalStrut(10));
 
         JButton deleteButton = new JButton("Törlés");
         deleteButton.addActionListener(e -> {
@@ -39,9 +41,12 @@ public class AuthorSidePanel extends JPanel {
         });
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(deleteButton);
+        add(Box.createVerticalStrut(30));
 
         nameField.setEditable(false);
         dateOfBirthField.setEditable(false);
+
+        add(new JLabel("Kiadott könyvek:"));
 
         booksList = new JList<>();
         booksList.setMaximumSize(new Dimension(400, 100));

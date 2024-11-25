@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -69,6 +70,20 @@ public class JpaBookRepository
     public ArrayList<Book> findAllBooks() {
         ArrayList<Book> books = new ArrayList<>();
         super.findAll().forEach(bookEntity -> books.add(Book.fromEntity(bookEntity)));
+        return books;
+    }
+
+    public List<Book> findAllLoanedBooks() {
+        ArrayList<Book> books = new ArrayList<>();
+        super.findAll().forEach(bookEntity -> {
+            Set<LoanEntity> loans = bookEntity.getLoans();
+            for (LoanEntity loan : loans) {
+                if (loan.getReturnDate().isAfter(LocalDate.now())) {
+                    books.add(Book.fromEntity(bookEntity));
+                    break;
+                }
+            }
+        });
         return books;
     }
 

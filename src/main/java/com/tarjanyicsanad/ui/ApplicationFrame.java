@@ -63,6 +63,9 @@ public class ApplicationFrame {
                 }
             });
         }
+
+        frame.setLocationRelativeTo(null);
+        frame.pack();
     }
 
     public void show() {
