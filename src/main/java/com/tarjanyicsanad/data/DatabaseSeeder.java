@@ -9,12 +9,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+/**
+ * A utility class for seeding the database with initial data.
+ */
 public class DatabaseSeeder {
     private DatabaseSeeder() {
     }
 
     private static final Logger logger = LogManager.getLogger(DatabaseSeeder.class);
 
+    /**
+     * Seeds the database with initial data.
+     * @param entityManager the entity manager to use for seeding
+     */
     public static void seed(EntityManager entityManager) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {

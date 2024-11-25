@@ -10,21 +10,38 @@ import org.hibernate.cfg.Configuration;
 
 import javax.inject.Singleton;
 
+
 @Module
 public class DatabaseModule {
 
+    /**
+     * Provides a singleton instance of SessionFactory.
+     *
+     * @return a configured SessionFactory instance.
+     */
     @Provides
     @Singleton
     public SessionFactory provideSessionFactory() {
         return new Configuration().configure().buildSessionFactory();
     }
 
+    /**
+     * Provides a singleton instance of EntityManagerFactory.
+     *
+     * @return a configured EntityManagerFactory instance.
+     */
     @Provides
     @Singleton
     public EntityManagerFactory provideEntityManagerFactory() {
         return Persistence.createEntityManagerFactory("libraryManagement");
     }
 
+    /**
+     * Provides a singleton instance of EntityManager.
+     *
+     * @param entityManagerFactory the EntityManagerFactory to create the EntityManager from.
+     * @return a configured EntityManager instance.
+     */
     @Provides
     @Singleton
     public EntityManager provideEntityManager(EntityManagerFactory entityManagerFactory) {

@@ -18,6 +18,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A Dagger module that binds the in memory implementations of the repositories to the interfaces,
+ * and provides test data for the repositories.
+ */
 @Module
 abstract class InMemoryRepositoryModule {
 
@@ -37,9 +41,9 @@ abstract class InMemoryRepositoryModule {
     static List<Book> provideTestBooks() {
         Author author = new Author(0, "John", "Gray", LocalDate.of(1990, 1, 1), Set.of());
         return List.of(
-                new Book(0, "Book 1", "Description 1", author, List.of(), LocalDate.of(2021, 1, 1)),
-                new Book(1, "Book 2", "Description 2", author, List.of(), LocalDate.of(2021, 2, 2)),
-                new Book(2, "Book 3", "Description 3", author, List.of(), LocalDate.of(2021, 3, 3))
+                new Book(0, "Book 1", "Description 1", author, Set.of(), LocalDate.of(2021, 1, 1)),
+                new Book(1, "Book 2", "Description 2", author, Set.of(), LocalDate.of(2021, 2, 2)),
+                new Book(2, "Book 3", "Description 3", author, Set.of(), LocalDate.of(2021, 3, 3))
         );
     }
 
@@ -55,9 +59,9 @@ abstract class InMemoryRepositoryModule {
     @Provides
     static List<Member> provideTestMembers() {
         return List.of(
-                new Member(0, "John", "Doe", LocalDate.of(1990, 1, 1)),
-                new Member(1, "Jane", "Doe", LocalDate.of(1991, 2, 2)),
-                new Member(2, "Alice", "Smith", LocalDate.of(1992, 3, 3))
+                new Member(0, "John", "Doe", LocalDate.of(1990, 1, 1), Set.of()),
+                new Member(1, "Jane", "Doe", LocalDate.of(1991, 2, 2), Set.of()),
+                new Member(2, "Alice", "Smith", LocalDate.of(1992, 3, 3), Set.of())
         );
     }
 }

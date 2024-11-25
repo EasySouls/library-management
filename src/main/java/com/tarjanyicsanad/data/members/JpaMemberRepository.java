@@ -1,10 +1,7 @@
 package com.tarjanyicsanad.data.members;
 
-import com.tarjanyicsanad.data.books.entities.BookEntity;
 import com.tarjanyicsanad.data.members.entities.MemberEntity;
-import com.tarjanyicsanad.domain.exceptions.BookNotFoundException;
 import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
-import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import com.tarjanyicsanad.domain.repository.MemberRepository;

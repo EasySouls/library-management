@@ -8,6 +8,9 @@ import jakarta.persistence.EntityManager;
 
 import javax.inject.Singleton;
 
+/**
+ * A Dagger component that provides repositories and an entity manager.
+ */
 @Component(modules = {
 //        InMemoryRepositoryModule.class,
         DatabaseRepositoryModule.class,

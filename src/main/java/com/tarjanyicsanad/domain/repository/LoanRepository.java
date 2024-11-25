@@ -3,9 +3,12 @@ package com.tarjanyicsanad.domain.repository;
 import com.tarjanyicsanad.domain.exceptions.LoanNotFoundException;
 import com.tarjanyicsanad.domain.model.Loan;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+/**
+ * A repository for managing {@link Loan}s.
+ */
 public interface LoanRepository {
     /**
      * Add a new loan to the repository
@@ -22,9 +25,9 @@ public interface LoanRepository {
 
     /**
      * Get all loans from the repository
-     * @return a list of all loans
+     * @return a set of all loans
      */
-    List<Loan> findAllLoans();
+    Set<Loan> findAllLoans();
 
     /**
      * Remove a loan from the repository
@@ -32,6 +35,12 @@ public interface LoanRepository {
      * @throws LoanNotFoundException if the loan with the given id is not found
      */
     void removeLoan(int id) throws LoanNotFoundException;
+
+    /**
+     * Remove all loans with the given book id from the repository
+     * @param bookId the id of the book to remove loans for
+     */
+    void removeLoansByBookId(int bookId);
 
     /**
      * Updates the loan with the same id as the given loan.

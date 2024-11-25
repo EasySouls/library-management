@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Hibernate implementation of the {@link AuthorRepository} interface.
+ */
 public class DatabaseAuthorRepository implements AuthorRepository {
     private final SessionFactory sessionFactory;
 

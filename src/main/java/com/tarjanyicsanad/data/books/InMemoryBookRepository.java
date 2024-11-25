@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * An in-memory implementation of the {@link BookRepository} interface.
+ */
 public class InMemoryBookRepository implements BookRepository {
     private final ArrayList<Book> books;
 

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * An in-memory implementation of the {@link AuthorRepository} interface.
+ */
 public class InMemoryAuthorRepository implements AuthorRepository {
     private final ArrayList<Author> authors;
 
@@ -37,7 +40,10 @@ public class InMemoryAuthorRepository implements AuthorRepository {
                 .filter(a -> a.id() == id)
                 .findFirst()
                 .orElse(null);
-        return Optional.ofNullable(author);
+        if (author == null) {
+            return Optional.empty();
+        }
+        return Optional.of(author);
     }
 
     @Override
@@ -56,7 +62,10 @@ public class InMemoryAuthorRepository implements AuthorRepository {
                 .filter(a -> a.firstName().equals(firstName) && a.lastName().equals(lastName))
                 .findFirst()
                 .orElse(null);
-        return Optional.ofNullable(author.toEntity());
+        if (author == null) {
+            return Optional.empty();
+        }
+        return Optional.of(author.toEntity());
     }
 
     @Override

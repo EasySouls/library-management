@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * An in-memory implementation of the {@link MemberRepository} interface.
+ */
 public class InMemoryMemberRepository implements MemberRepository {
     private final ArrayList<Member> members;
 

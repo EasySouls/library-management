@@ -13,6 +13,9 @@ import dagger.Module;
 
 import javax.inject.Singleton;
 
+/**
+ * A Dagger module that binds the JPA implementations of the repositories to the interfaces.
+ */
 @Module
 public abstract class DatabaseRepositoryModule {
 

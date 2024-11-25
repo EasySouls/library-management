@@ -6,10 +6,14 @@ import com.tarjanyicsanad.domain.model.Loan;
 import com.tarjanyicsanad.domain.repository.BaseRepository;
 import com.tarjanyicsanad.domain.repository.LoanRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * JPA implementation of the {@link LoanRepository} interface.
@@ -17,6 +21,8 @@ import java.util.Optional;
 public class JpaLoanRepository
         extends BaseRepository<LoanEntity, Integer, LoanNotFoundException>
         implements LoanRepository {
+
+    private static final Logger logger = LogManager.getLogger(JpaLoanRepository.class);
 
     @Inject
     public JpaLoanRepository(EntityManager entityManager) {
@@ -34,8 +40,8 @@ public class JpaLoanRepository
     }
 
     @Override
-    public ArrayList<Loan> findAllLoans() {
-        ArrayList<Loan> loans = new ArrayList<>();
+    public Set<Loan> findAllLoans() {
+        Set<Loan> loans = new HashSet<>();
         super.findAll().forEach(loanEntity -> loans.add(Loan.fromEntity(loanEntity)));
         return loans;
     }
@@ -47,6 +53,28 @@ public class JpaLoanRepository
             throw new LoanNotFoundException("Loan with " + id + " not found");
         }
         super.delete(loanEntity);
+    }
+
+    /**
+     * Remove all loans with the given book id from the repository.
+     * Guaranteed to be executed in a single transaction.
+     * @param bookId the id of the book to remove loans for
+     */
+    @Override
+    public void removeLoansByBookId(int bookId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.createQuery("DELETE FROM loans l WHERE l.book.id = :bookId")
+                    .setParameter("bookId", bookId)
+                    .executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            logger.error("Failed to remove loans by book id", e);
+        }
     }
 
     @Override

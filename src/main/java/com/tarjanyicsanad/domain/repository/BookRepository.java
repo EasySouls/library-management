@@ -6,6 +6,9 @@ import com.tarjanyicsanad.domain.model.Book;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A repository for {@link Book}s.
+ */
 public interface BookRepository {
     /**
      * Add a book to the repository

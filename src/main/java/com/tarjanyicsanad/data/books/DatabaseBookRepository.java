@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Hibernate implementation of the {@link BookRepository} interface.
+ */
 public class DatabaseBookRepository implements BookRepository {
     private final SessionFactory sessionFactory;
 

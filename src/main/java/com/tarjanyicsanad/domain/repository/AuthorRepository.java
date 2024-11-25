@@ -3,11 +3,13 @@ package com.tarjanyicsanad.domain.repository;
 import com.tarjanyicsanad.data.authors.entities.AuthorEntity;
 import com.tarjanyicsanad.domain.exceptions.AuthorNotFoundException;
 import com.tarjanyicsanad.domain.model.Author;
-import jakarta.persistence.NoResultException;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A repository for managing {@link Author}s.
+ */
 public interface AuthorRepository {
 
     /**

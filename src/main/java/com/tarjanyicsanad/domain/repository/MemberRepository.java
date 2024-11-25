@@ -6,6 +6,9 @@ import com.tarjanyicsanad.domain.model.Member;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A repository for managing {@link Member}s.
+ */
 public interface MemberRepository {
     /**
      * Add a new member to the repository

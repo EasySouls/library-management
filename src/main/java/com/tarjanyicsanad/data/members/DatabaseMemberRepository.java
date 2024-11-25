@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * A database implementation of the {@link MemberRepository} interface.
+ */
 public class DatabaseMemberRepository implements MemberRepository {
 
     private final SessionFactory sessionFactory;

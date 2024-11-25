@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- * JPA implementation of the {@link BookRepository}.
+ * JPA implementation of the {@link BookRepository} interface.
  */
 public class JpaBookRepository
         extends BaseRepository<BookEntity, Integer, BookNotFoundException>
