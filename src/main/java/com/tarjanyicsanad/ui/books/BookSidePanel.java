@@ -170,7 +170,6 @@ public class BookSidePanel extends JPanel {
             JOptionPane.showMessageDialog(this, "A tag email címe és a könyv címe nem lehet üres!");
             return;
         }
-
         onNewLoan.accept(bookName, memberEmail, returnDate);
     }
 }

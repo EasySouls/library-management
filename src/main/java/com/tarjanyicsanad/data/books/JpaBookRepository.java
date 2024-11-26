@@ -143,7 +143,7 @@ public class JpaBookRepository
             // Check if the book is already borrowed by the member
             Set<LoanEntity> loans = book.getLoans();
             for (LoanEntity existingLoan : loans) {
-                if (existingLoan.getMember().equals(member)) {
+                if (existingLoan.getMember() != null && existingLoan.getMember().equals(member)) {
                     throw new IllegalArgumentException("Book is already borrowed by this member");
                 }
             }

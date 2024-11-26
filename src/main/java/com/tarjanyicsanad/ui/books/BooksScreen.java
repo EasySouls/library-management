@@ -1,6 +1,7 @@
 package com.tarjanyicsanad.ui.books;
 
 import com.tarjanyicsanad.data.books.entities.BookEntity;
+import com.tarjanyicsanad.domain.exceptions.BookAlreadyBorrowedException;
 import com.tarjanyicsanad.domain.exceptions.MemberNotFoundException;
 import com.tarjanyicsanad.domain.model.Book;
 import com.tarjanyicsanad.domain.model.Loan;
@@ -148,10 +149,15 @@ public class BooksScreen extends JPanel {
     private void onNewLoan(String bookName, String memberEmail, String returnDate) {
         logger.info("New loan for book {} by user {}", bookName, memberEmail);
         LocalDate returnDateParsed = LocalDate.parse(returnDate);
+        if (LocalDate.now().isAfter(returnDateParsed)) {
+            JOptionPane.showMessageDialog(null, "A visszahozás dátuma nem lehet a múltban!");
+            return;
+        }
         try {
             Member member = memberRepository.findMemberByEmail(memberEmail);
             BookEntity book = bookRepository.findBookByTitle(bookName).toEntityWithId();
             bookRepository.addLoanToBook(book.getId(), member.email(), returnDateParsed);
+            tableModel.refreshData();
             tableModel.fireTableDataChanged();
         } catch (MemberNotFoundException e) {
             logger.error("Member not found while adding loan", e);
@@ -159,6 +165,9 @@ public class BooksScreen extends JPanel {
         } catch (IllegalArgumentException e) {
             logger.error("Error while adding loan", e);
             JOptionPane.showMessageDialog(null, "A könyvet már kikölcsönözte ez a személy!");
+        } catch (BookAlreadyBorrowedException e) {
+            logger.error("Error while adding loan", e);
+            JOptionPane.showMessageDialog(null, "A könyv éppen ki van kölcsönözve!");
         } catch (Exception e) {
             logger.error("Error while adding loan", e);
             JOptionPane.showMessageDialog(null, "Hiba történt a kölcsönzés hozzáadása közben!");

@@ -110,6 +110,10 @@ public class BooksTableModel extends AbstractTableModel {
         };
     }
 
+    public void refreshData() {
+        applyFilter();
+    }
+
     /**
      * Sets the filter to apply to the table.
      *
