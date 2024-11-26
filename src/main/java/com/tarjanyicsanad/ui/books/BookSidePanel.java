@@ -121,9 +121,7 @@ public class BookSidePanel extends JPanel {
     }
 
     private JPanel loansPanel() {
-        JPanel newLoanPanel;
         JPanel loansPanel = new JPanel();
-
         loansPanel.setLayout(new BoxLayout(loansPanel, BoxLayout.Y_AXIS));
         loansPanel.add(new JLabel("Kölcsönzések:"));
         existingLoansList = new JList<>();
@@ -132,7 +130,9 @@ public class BookSidePanel extends JPanel {
         loansPanel.add(existingLoansList);
         loansPanel.add(Box.createVerticalStrut(30));
 
-        newLoanPanel = new JPanel();
+
+        JPanel newLoanPanel = new JPanel();
+        newLoanPanel.setLayout(new BoxLayout(newLoanPanel, BoxLayout.Y_AXIS));
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         returnDateField = new JFormattedTextField(df);
         returnDateField.setColumns(10);

@@ -98,10 +98,4 @@ public class MembersSidePanel extends JPanel {
         loansPanel.add(loansList, BorderLayout.CENTER);
         return new JScrollPane(loansPanel);
     }
-
-    public void setEditable(boolean editable) {
-        nameField.setEditable(editable);
-        emailField.setEditable(editable);
-        joinedAtField.setEditable(editable);
-    }
 }
