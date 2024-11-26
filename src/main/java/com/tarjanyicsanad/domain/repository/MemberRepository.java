@@ -31,6 +31,11 @@ public interface MemberRepository {
     Member findMemberByEmail(String email) throws MemberNotFoundException;
 
     /**
+     * Returns a list of members with active loans.
+     */
+    List<Member> findMembersWithActiveLoans();
+
+    /**
      * Get all members from the repository
      * @return a list of all members
      */

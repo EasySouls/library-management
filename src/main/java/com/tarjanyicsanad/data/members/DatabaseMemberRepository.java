@@ -7,10 +7,12 @@ import com.tarjanyicsanad.domain.repository.MemberRepository;
 import org.hibernate.SessionFactory;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 /**
  * A database implementation of the {@link MemberRepository} interface.
@@ -62,6 +64,19 @@ public class DatabaseMemberRepository implements MemberRepository {
             }
         });
         return Member.fromEntity(memberEntity.get());
+    }
+
+    @Override
+    public List<Member> findMembersWithActiveLoans() {
+        List<MemberEntity> memberEntities = new ArrayList<>();
+        sessionFactory.inTransaction(session ->
+                memberEntities.addAll(session.createQuery("SELECT m FROM members m WHERE m.loans IS NOT EMPTY", MemberEntity.class).getResultList())
+        );
+        Stream<MemberEntity> hasLoans = memberEntities.stream()
+                .filter(member -> member.getLoans().stream().anyMatch(loan ->
+                        loan.getReturnDate().isAfter(LocalDate.now())
+                ));
+        return hasLoans.map(Member::fromEntity).toList();
     }
 
     @Override

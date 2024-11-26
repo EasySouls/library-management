@@ -5,6 +5,7 @@ import com.tarjanyicsanad.domain.model.Member;
 import com.tarjanyicsanad.domain.repository.MemberRepository;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +39,18 @@ public class InMemoryMemberRepository implements MemberRepository {
                 .filter(member -> member.email().equals(email))
                 .findFirst()
                 .orElseThrow(() -> new MemberNotFoundException("Member with email " + email + " not found"));
+    }
+
+    @Override
+    public List<Member> findMembersWithActiveLoans() {
+        return members.stream()
+                .filter(member ->
+                        !member.loans().isEmpty() &&
+                                member.loans().stream().anyMatch(loan ->
+                                        loan.returnDate().isAfter(LocalDate.now())
+                                )
+                )
+                .toList();
     }
 
     @Override

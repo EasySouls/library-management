@@ -5,7 +5,9 @@ import com.tarjanyicsanad.domain.repository.MemberRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A table model for displaying {@link Member}s in a {@link javax.swing.JTable}.
@@ -14,18 +16,24 @@ public class MembersTableModel extends AbstractTableModel {
 
     private final transient MemberRepository memberRepository;
 
+    private final List<Member> filteredMembers;
+    private FilterOption filter;
+
     public MembersTableModel(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
+        this.filteredMembers = memberRepository.findAllMembers();
+        this.filter = FilterOption.ALL;
+        applyFilter();
     }
 
     public void removeMember(int id) {
         memberRepository.removeMember(id);
-        fireTableDataChanged();
+        applyFilter();
     }
 
     @Override
     public int getRowCount() {
-        return memberRepository.findAllMembers().size();
+        return filteredMembers.size();
     }
 
     @Override
@@ -65,5 +73,27 @@ public class MembersTableModel extends AbstractTableModel {
             case 2 -> LocalDate.class;
             default -> Object.class;
         };
+    }
+
+    public void setFilter(FilterOption filter) {
+        this.filter = filter;
+        applyFilter();
+    }
+
+    private void applyFilter() {
+        List<Member> members = memberRepository.findAllMembers();
+        filteredMembers.clear();
+        List<Member> membersWithActiveLoans = memberRepository.findMembersWithActiveLoans();
+        for (Member member : members) {
+            if (filter == FilterOption.ALL || filter == FilterOption.HAS_ACTIVE_LOANS && membersWithActiveLoans.contains(member)) {
+                filteredMembers.add(member);
+            }
+        }
+        fireTableDataChanged();
+    }
+
+    public enum FilterOption {
+        ALL,
+        HAS_ACTIVE_LOANS,
     }
 }

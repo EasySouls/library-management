@@ -9,7 +9,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,6 +46,18 @@ public class JpaMemberRepository
         } catch (NoResultException e) {
             throw new MemberNotFoundException("Member with email " + email + " not found");
         }
+    }
+
+    @Override
+    public List<Member> findMembersWithActiveLoans() {
+        List<Member> members = new ArrayList<>();
+        entityManager.createQuery(
+                        "SELECT DISTINCT m FROM members m JOIN m.loans l WHERE l.returnDate IS NOT NULL AND l.returnDate > :now",
+                        MemberEntity.class)
+                .setParameter("now", LocalDate.now())
+                .getResultList()
+                .forEach(memberEntity -> members.add(Member.fromEntity(memberEntity)));
+        return members;
     }
 
     @Override

@@ -19,6 +19,15 @@ public class MembersScreen extends JPanel {
 
         MembersTableModel tableModel = new MembersTableModel(memberRepository);
 
+        JComboBox<MembersTableModel.FilterOption> filterComboBox = new JComboBox<>(MembersTableModel.FilterOption.values());
+        filterComboBox.addActionListener(_ -> {
+            MembersTableModel.FilterOption selectedFilter = (MembersTableModel.FilterOption) filterComboBox.getSelectedItem();
+            assert selectedFilter != null;
+            tableModel.setFilter(selectedFilter);
+        });
+        filterComboBox.setPreferredSize(new Dimension(200, 30));
+        add(filterComboBox, BorderLayout.NORTH);
+
         JTable membersTable = new JTable();
         membersTable.setModel(tableModel);
         membersTable.setFillsViewportHeight(true);
