@@ -3,8 +3,7 @@ package com.tarjanyicsanad.data.loans;
 import com.tarjanyicsanad.domain.model.Loan;
 import com.tarjanyicsanad.domain.repository.LoanRepository;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +23,10 @@ public class InMemoryLoanRepository implements LoanRepository {
 
     @Override
     public void addLoan(Loan loan) {
-        loans.add(loan);
+        List<Loan> loansList = new ArrayList<>(loans.stream().toList());
+        loansList.add(loan);
+        loans.clear();
+        loans.addAll(loansList);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class InMemoryLoanRepository implements LoanRepository {
 
     @Override
     public Set<Loan> findAllLoans() {
-        return loans;
+        return new HashSet<>(loans);
     }
 
     @Override

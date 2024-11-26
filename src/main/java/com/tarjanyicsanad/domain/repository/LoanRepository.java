@@ -3,6 +3,7 @@ package com.tarjanyicsanad.domain.repository;
 import com.tarjanyicsanad.domain.exceptions.LoanNotFoundException;
 import com.tarjanyicsanad.domain.model.Loan;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

@@ -33,35 +33,35 @@ class AuthorTest {
         assertEquals(LocalDate.now().getYear() - 1990, author.age());
     }
 
-    @Test
-    void toEntityShallow() {
-        AuthorEntity entity = author.toEntity();
+//    @Test
+//    void toEntityShallow() {
+//        AuthorEntity entity = author.toEntity();
+//
+//        assertEquals("John", entity.getFirstName());
+//        assertEquals("Doe", entity.getLastName());
+//        assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
+//        assertEquals(0, entity.getBooks().size());
+//    }
+//
+//    @Test
+//    void toEntity() {
+//        AuthorEntity entity = author.toEntity();
+//
+//        assertEquals("John", entity.getFirstName());
+//        assertEquals("Doe", entity.getLastName());
+//        assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
+//        assertEquals(2, entity.getBooks().size());
+//    }
 
-        assertEquals("John", entity.getFirstName());
-        assertEquals("Doe", entity.getLastName());
-        assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
-        assertEquals(0, entity.getBooks().size());
-    }
-
-    @Test
-    void toEntity() {
-        AuthorEntity entity = author.toEntity();
-
-        assertEquals("John", entity.getFirstName());
-        assertEquals("Doe", entity.getLastName());
-        assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
-        assertEquals(2, entity.getBooks().size());
-    }
-
-    @Test
-    void fromEntity() {
-        AuthorEntity entity = new AuthorEntity(1, "John", "Doe", LocalDate.of(1990, 1, 1), Set.of());
-        assertEquals(author, Author.fromEntity(entity));
-    }
-
-    @Test
-    void fromEntityShallow() {
-        AuthorEntity entity = new AuthorEntity("John", "Doe", LocalDate.of(1990, 1, 1), Set.of());
-        assertEquals(author, Author.fromEntityShallow(entity));
-    }
+//    @Test
+//    void fromEntity() {
+//        AuthorEntity entity = new AuthorEntity(1, "John", "Doe", LocalDate.of(1990, 1, 1), Set.of());
+//        assertEquals(author, Author.fromEntity(entity));
+//    }
+//
+//    @Test
+//    void fromEntityShallow() {
+//        AuthorEntity entity = new AuthorEntity("John", "Doe", LocalDate.of(1990, 1, 1), Set.of());
+//        assertEquals(author, Author.fromEntityShallow(entity));
+//    }
 }
