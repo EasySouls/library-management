@@ -10,7 +10,9 @@ import org.hibernate.cfg.Configuration;
 
 import javax.inject.Singleton;
 
-
+/**
+ * A Dagger module that provides database-related dependencies.
+ */
 @Module
 public class DatabaseModule {
 

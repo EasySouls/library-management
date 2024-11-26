@@ -14,6 +14,11 @@ import java.awt.event.MouseEvent;
  */
 public class MembersScreen extends JPanel {
 
+    /**
+     * Creates a new {@link MembersScreen}.
+     *
+     * @param memberRepository the repository to use for accessing members
+     */
     public MembersScreen(MemberRepository memberRepository) {
         setLayout(new BorderLayout());
 

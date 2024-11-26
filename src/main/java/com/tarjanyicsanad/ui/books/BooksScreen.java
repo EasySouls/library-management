@@ -44,6 +44,14 @@ public class BooksScreen extends JPanel {
     private final MemberRepository memberRepository;
     private final LoanRepository loanRepository;
 
+    /**
+     * Creates a new {@link BooksScreen}.
+     *
+     * @param bookRepository the repository to use for accessing books
+     * @param authorRepository the repository to use for accessing authors
+     * @param memberRepository the repository to use for accessing members
+     * @param loanRepository the repository to use for accessing loans
+     */
     @Inject
     public BooksScreen(BookRepository bookRepository,
                        AuthorRepository authorRepository,

@@ -18,6 +18,11 @@ import java.util.Optional;
 public class JpaAuthorRepository
         extends BaseRepository<AuthorEntity, Integer, AuthorNotFoundException>
         implements AuthorRepository {
+
+    /**
+     * Creates a new {@link JpaAuthorRepository}.
+     * @param entityManager the JPA entity manager
+     */
     @Inject
     public JpaAuthorRepository(EntityManager entityManager) {
         super(entityManager, AuthorEntity.class);

@@ -22,6 +22,11 @@ import java.util.concurrent.atomic.AtomicReference;
 public class DatabaseBookRepository implements BookRepository {
     private final SessionFactory sessionFactory;
 
+    /**
+     * Creates a new {@link DatabaseBookRepository}.
+     *
+     * @param sessionFactory the Hibernate session factory
+     */
     @Inject
     public DatabaseBookRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

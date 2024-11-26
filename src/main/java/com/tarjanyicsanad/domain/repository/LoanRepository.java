@@ -51,6 +51,7 @@ public interface LoanRepository {
 
     /**
      * Updates the loan with the same id as the given loan.
+     * @param loan the loan to update
      * @throws LoanNotFoundException if no loan with the same id is found
      */
     void updateLoan(Loan loan) throws LoanNotFoundException;

@@ -23,6 +23,12 @@ public class BooksTableModel extends AbstractTableModel {
     private List<Book> filteredBooks;
     private FilterOption filter;
 
+    /**
+     * Creates a new {@link BooksTableModel}.
+     *
+     * @param bookRepository the repository to use for accessing books
+     * @param authorRepository the repository to use for accessing authors
+     */
     public BooksTableModel(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
@@ -31,6 +37,14 @@ public class BooksTableModel extends AbstractTableModel {
         applyFilter();
     }
 
+    /**
+     * Adds a new book to the table.
+     *
+     * @param title the title of the book
+     * @param description the description of the book
+     * @param authorName the name of the author of the book
+     * @param publishingDateString the publishing date of the book
+     */
     public void addBook(String title, String description, String authorName, String publishingDateString) {
         LocalDate publishingDate = LocalDate.parse(publishingDateString);
         String lastName = authorName.split(" ")[0];
@@ -44,6 +58,11 @@ public class BooksTableModel extends AbstractTableModel {
         applyFilter();
     }
 
+    /**
+     * Removes a book from the table.
+     *
+     * @param id the ID of the book to remove
+     */
     public void removeBook(int id) {
         bookRepository.removeBook(id);
         applyFilter();
@@ -91,6 +110,11 @@ public class BooksTableModel extends AbstractTableModel {
         };
     }
 
+    /**
+     * Sets the filter to apply to the table.
+     *
+     * @param filter the filter to apply
+     */
     public void setFilter(FilterOption filter) {
         this.filter = filter;
         applyFilter();
@@ -127,9 +151,23 @@ public class BooksTableModel extends AbstractTableModel {
         }
     }
 
+    /**
+     * An enum representing the filter options for the table model.
+     */
     public enum FilterOption {
+        /**
+         * Show all books.
+         */
         ALL,
+
+        /**
+         * Show only loaned books.
+         */
         LOANED,
+
+        /**
+         * Show only not loaned books.
+         */
         NOT_LOANED
     }
 }

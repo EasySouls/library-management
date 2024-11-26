@@ -13,8 +13,17 @@ import java.util.List;
  */
 public abstract class BaseRepository<T, D, E extends Exception> {
     private final Class<T> entityClass;
+
+    /**
+     * The entity manager used to access the database.
+     */
     protected final EntityManager entityManager;
 
+    /**
+     * Creates a new {@link BaseRepository}.
+     * @param entityManager the entity manager to use
+     * @param entityClass the class of the entity
+     */
     protected BaseRepository(EntityManager entityManager, Class<T> entityClass) {
         this.entityManager = entityManager;
         this.entityClass = entityClass;

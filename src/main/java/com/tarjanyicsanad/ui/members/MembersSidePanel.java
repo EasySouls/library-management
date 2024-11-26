@@ -18,6 +18,11 @@ public class MembersSidePanel extends JPanel {
 
     private Member member;
 
+    /**
+     * Creates a new {@link MembersSidePanel}.
+     *
+     * @param onDelete the consumer to call when the user wants to delete a member
+     */
     public MembersSidePanel(Consumer<Member> onDelete) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(400, 0));
@@ -62,6 +67,11 @@ public class MembersSidePanel extends JPanel {
         add(loansList());
     }
 
+    /**
+     * Sets the data of the panel to the given {@link Member}.
+     *
+     * @param member the member to display
+     */
     public void setData(Member member) {
         this.member = member;
         if (member == null) {

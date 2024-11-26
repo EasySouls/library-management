@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.function.Consumer;
 
+/**
+ * A panel that displays the details of an {@link Author} and allows the user to delete it.
+ */
 public class AuthorSidePanel extends JPanel {
     private final JTextField nameField;
     private final JTextField dateOfBirthField;
@@ -14,6 +17,11 @@ public class AuthorSidePanel extends JPanel {
 
     private Author author;
 
+    /**
+     * Creates a new {@link AuthorSidePanel}.
+     *
+     * @param onDelete a callback that will be called when the user wants to delete the author
+     */
     public AuthorSidePanel(Consumer<Author> onDelete) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(400, 0));
@@ -55,6 +63,11 @@ public class AuthorSidePanel extends JPanel {
         add(new JScrollPane(booksList));
     }
 
+    /**
+     * Sets the data to be displayed in the panel.
+     *
+     * @param author the author to display, or {@code null} to clear the panel
+     */
     public void setData(Author author) {
         this.author = author;
         if (author == null) {

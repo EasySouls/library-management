@@ -23,6 +23,13 @@ public class InMemoryBookRepository implements BookRepository {
     MemberRepository memberRepository;
     LoanRepository loanRepository;
 
+    /**
+     * Creates a new {@link InMemoryBookRepository}.
+     *
+     * @param books the initial list of books to populate the repository with
+     * @param memberRepository the repository to use for accessing members
+     * @param loanRepository the repository to use for accessing loans
+     */
     @Inject
     public InMemoryBookRepository(List<Book> books, MemberRepository memberRepository, LoanRepository loanRepository) {
         this.memberRepository = memberRepository;

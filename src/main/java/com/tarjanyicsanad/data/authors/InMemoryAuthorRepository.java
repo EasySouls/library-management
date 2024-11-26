@@ -16,6 +16,11 @@ import java.util.Optional;
 public class InMemoryAuthorRepository implements AuthorRepository {
     private final ArrayList<Author> authors;
 
+    /**
+     * Creates a new {@link InMemoryAuthorRepository}.
+     *
+     * @param authors the initial list of authors
+     */
     @Inject
     public InMemoryAuthorRepository(List<Author> authors) {
         this.authors = authors.isEmpty() ? new ArrayList<>() : new ArrayList<>(authors);
@@ -79,10 +84,18 @@ public class InMemoryAuthorRepository implements AuthorRepository {
         addAuthor(author);
     }
 
+    /**
+     * Clears the repository.
+     */
     public void clear() {
         authors.clear();
     }
 
+    /**
+     * Adds all the given authors to the repository.
+     *
+     * @param authors the authors to add
+     */
     public void addAll(List<Author> authors) {
         this.authors.addAll(authors);
     }

@@ -92,8 +92,18 @@ public class MembersTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * An enumeration of the possible filter options for the table.
+     */
     public enum FilterOption {
+        /**
+         * Show all members.
+         */
         ALL,
+
+        /**
+         * Show only members with active loans.
+         */
         HAS_ACTIVE_LOANS,
     }
 }

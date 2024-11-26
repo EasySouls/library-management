@@ -11,6 +11,13 @@ import java.util.stream.Collectors;
 
 /**
  * Represents a book with its details, author, and associated loans.
+ * @param id the unique identifier of the book.
+ * @param title the title of the book.
+ * @param description the description of the book.
+ * @param author the author of the book.
+ * @param loans the set of loans associated with the book.
+ * @param publishingDate the publishing date of the book.
+ * @see Author
  */
 public record Book(
         int id,

@@ -11,6 +11,12 @@ import java.util.stream.Collectors;
 
 /**
  * Represents a member with basic details such as name, email, and the date they joined.
+ * @param id the unique identifier of the member.
+ * @param name the name of the member.
+ * @param email the email of the member.
+ * @param joinedAt the date the member joined.
+ * @param loans the loans the member has.
+ * @see Loan
  */
 public record Member(
         Integer id,
@@ -43,6 +49,12 @@ public record Member(
         return new Member(entity.getId(), entity.getName(), entity.getEmail(), entity.getJoinedAt(), loans);
     }
 
+    /**
+     * Creates a shallow Member from a MemberEntity.
+     *
+     * @param entity the MemberEntity to convert.
+     * @return a Member representing the given MemberEntity.
+     */
     public static Member fromEntityShallow(MemberEntity entity) {
         return new Member(entity.getId(), entity.getName(), entity.getEmail(), entity.getJoinedAt(), Set.of());
     }

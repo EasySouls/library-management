@@ -21,6 +21,11 @@ public class DatabaseMemberRepository implements MemberRepository {
 
     private final SessionFactory sessionFactory;
 
+    /**
+     * Creates a new {@link DatabaseMemberRepository}.
+     *
+     * @param sessionFactory the Hibernate session factory
+     */
     @Inject
     public DatabaseMemberRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

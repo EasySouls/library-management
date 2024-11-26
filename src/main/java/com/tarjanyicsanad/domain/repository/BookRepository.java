@@ -55,6 +55,7 @@ public interface BookRepository {
 
     /**
      * Updates the book with the same id as the given book.
+     * @param book the book to update
      * @throws BookNotFoundException if no book with the same id is found
      */
     void updateBook(Book book) throws BookNotFoundException;

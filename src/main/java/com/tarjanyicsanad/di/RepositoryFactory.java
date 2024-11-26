@@ -19,9 +19,28 @@ import javax.inject.Singleton;
 })
 @Singleton
 public interface RepositoryFactory {
+    /**
+     * @return a new instance of {@link BookRepository}
+     */
     BookRepository bookRepository();
+
+    /**
+     * @return a new instance of {@link AuthorRepository}
+     */
     AuthorRepository authorRepository();
+
+    /**
+     * @return a new instance of {@link MemberRepository}
+     */
     MemberRepository memberRepository();
+
+    /**
+     * @return a new instance of {@link LoanRepository}
+     */
     LoanRepository loanRepository();
+
+    /**
+     * @return a new instance of {@link EntityManager}
+     */
     EntityManager entityManager();
 }

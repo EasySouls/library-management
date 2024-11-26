@@ -24,6 +24,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * The main frame of the application.
+ */
 public class ApplicationFrame {
     private JFrame frame;
 
@@ -34,6 +37,17 @@ public class ApplicationFrame {
 
     private static final Logger logger = LogManager.getLogger(ApplicationFrame.class);
 
+    /**
+     * Creates a new {@link ApplicationFrame} with the given title, width, height and repositories.
+     *
+     * @param title            the title of the frame
+     * @param width            the width of the frame
+     * @param height           the height of the frame
+     * @param bookRepository   the repository for {@link Book}s
+     * @param authorRepository the repository for {@link Author}s
+     * @param memberRepository the repository for {@link com.tarjanyicsanad.domain.model.Member}s
+     * @param loanRepository   the repository for {@link com.tarjanyicsanad.domain.model.Loan}s
+     */
     public ApplicationFrame(String title,
                             int width,
                             int height,
@@ -68,6 +82,9 @@ public class ApplicationFrame {
         frame.pack();
     }
 
+    /**
+     * Sets the visibility of the frame to true.
+     */
     public void show() {
         frame.setVisible(true);
     }

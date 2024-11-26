@@ -11,6 +11,12 @@ import java.util.stream.Collectors;
 
 /**
  * Represents an author with basic details and a set of books.
+ * @param id the unique identifier of the author.
+ * @param firstName the first name of the author.
+ * @param lastName the last name of the author.
+ * @param dateOfBirth the date of birth of the author.
+ * @param books the set of books written by the author.
+ * @see Book
  */
 public record Author(
         Integer id,

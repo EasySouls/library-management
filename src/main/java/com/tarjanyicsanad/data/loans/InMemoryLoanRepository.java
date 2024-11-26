@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
 public class InMemoryLoanRepository implements LoanRepository {
     private final Set<Loan> loans;
 
+    /**
+     * Creates a new {@link InMemoryLoanRepository}.
+     *
+     * @param loans the initial set of loans
+     */
     public InMemoryLoanRepository(Set<Loan> loans) {
         this.loans = loans;
     }

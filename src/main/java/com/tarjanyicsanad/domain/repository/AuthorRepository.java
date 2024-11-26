@@ -14,17 +14,20 @@ public interface AuthorRepository {
 
     /**
      * Adds the given author to the repository.
+     * @param author the author to add
      */
     void addAuthor(Author author);
 
     /**
      * Removes the author with the given id.
+     * @param id the id of the author to remove
      * @throws AuthorNotFoundException if no author with the given id is found
      */
     void removeAuthor(int id) throws AuthorNotFoundException;
 
     /**
      * Returns an author with the given id.
+     * @param id the id of the author to find
      * @return an empty optional if no author with the given id is found
      */
     Optional<Author> getAuthor(int id);
@@ -47,11 +50,13 @@ public interface AuthorRepository {
     /**
      * Returns a list of all authors.
      * The list is unmodifiable, meaning that changes to it will not be reflected in the data.
+     * @return a list of all authors
      */
     List<Author> findAllAuthors();
 
     /**
      * Updates the author with the same id as the given author.
+     * @param author the author to update
      * @throws AuthorNotFoundException if no author with the same id is found
      */
     void updateAuthor(Author author) throws AuthorNotFoundException;

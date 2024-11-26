@@ -16,6 +16,11 @@ import java.util.Optional;
 public class InMemoryMemberRepository implements MemberRepository {
     private final ArrayList<Member> members;
 
+    /**
+     * Creates a new {@link InMemoryMemberRepository}.
+     *
+     * @param members the initial list of members
+     */
     @Inject
     public InMemoryMemberRepository(List<Member> members) {
         this.members = new ArrayList<>(members);

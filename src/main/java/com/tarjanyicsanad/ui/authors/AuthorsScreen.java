@@ -29,6 +29,11 @@ public class AuthorsScreen extends JPanel {
 
     private final AuthorsTableModel tableModel;
 
+    /**
+     * Creates a new {@link AuthorsScreen}.
+     *
+     * @param repository the repository to use for accessing authors
+     */
     public AuthorsScreen(AuthorRepository repository) {
         setLayout(new BorderLayout());
 

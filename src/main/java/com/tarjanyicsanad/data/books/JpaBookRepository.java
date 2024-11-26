@@ -34,6 +34,12 @@ public class JpaBookRepository
 
     private static final Logger logger = LogManager.getLogger(JpaBookRepository.class);
 
+    /**
+     * Creates a new {@link JpaBookRepository}.
+     *
+     * @param entityManager the JPA entity manager
+     * @param authorRepository the repository to use for accessing authors
+     */
     @Inject
     public JpaBookRepository(EntityManager entityManager, AuthorRepository authorRepository) {
         super(entityManager, BookEntity.class);
@@ -73,6 +79,11 @@ public class JpaBookRepository
         return books;
     }
 
+    /**
+     * Returns a list of all books that are currently loaned.
+     *
+     * @return a list of all loaned books
+     */
     public List<Book> findAllLoanedBooks() {
         ArrayList<Book> books = new ArrayList<>();
         super.findAll().forEach(bookEntity -> {

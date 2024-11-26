@@ -5,5 +5,11 @@ package com.tarjanyicsanad.ui;
  */
 @FunctionalInterface
 public interface LayoutChanger {
+
+    /**
+     * Changes the layout of the main window.
+     *
+     * @param layout the new layout to use
+     */
     void changeLayout(String layout);
 }

@@ -35,7 +35,13 @@ public class BookSidePanel extends JPanel {
 
     private static final Logger logger = LogManager.getLogger(BookSidePanel.class);
 
-
+    /**
+     * Creates a new {@link BookSidePanel}.
+     *
+     * @param onDelete a callback that will be called when the user wants to delete the book
+     * @param onNewLoan a callback that will be called when the user wants to add a new loan
+     * @param getLoansByBookTitle a function that returns the loans for a book
+     */
     public BookSidePanel(Consumer<Book> onDelete,
                          TriConsumer<String, String, String> onNewLoan,
                          Function<String, Set<Loan>> getLoansByBookTitle) {
@@ -96,6 +102,11 @@ public class BookSidePanel extends JPanel {
         add(loansPanel());
     }
 
+    /**
+     * Sets the data to be displayed in the panel.
+     *
+     * @param book the book to display, or {@code null} to clear the panel
+     */
     public void setData(Book book) {
         this.book = book;
         if (book == null) {

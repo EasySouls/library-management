@@ -20,6 +20,11 @@ import java.util.Optional;
 public class JpaMemberRepository
         extends BaseRepository<MemberEntity, Integer, MemberNotFoundException>
         implements MemberRepository {
+
+    /**
+     * Creates a new {@link JpaMemberRepository}.
+     * @param entityManager the JPA entity manager
+     */
     @Inject
     public JpaMemberRepository(EntityManager entityManager) {
         super(entityManager, MemberEntity.class);

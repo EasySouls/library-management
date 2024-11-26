@@ -7,6 +7,13 @@ import javax.swing.*;
  */
 public class MenuBar extends JMenuBar {
 
+    /**
+     * Creates a new {@link MenuBar} with the given {@link LayoutChanger}, save action and load action.
+     *
+     * @param layoutChanger the {@link LayoutChanger} to use
+     * @param saveAction the action to run when the save menu item is clicked
+     * @param loadAction the action to run when the load menu item is clicked
+     */
     public MenuBar(LayoutChanger layoutChanger, Runnable saveAction, Runnable loadAction) {
         String listString = "Listázás";
 

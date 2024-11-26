@@ -26,6 +26,11 @@ public class JpaLoanRepository
 
     private static final Logger logger = LogManager.getLogger(JpaLoanRepository.class);
 
+    /**
+     * Creates a new {@link JpaLoanRepository}.
+     *
+     * @param entityManager the JPA entity manager
+     */
     @Inject
     public JpaLoanRepository(EntityManager entityManager) {
         super(entityManager, LoanEntity.class);

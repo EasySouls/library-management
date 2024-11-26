@@ -14,16 +14,33 @@ public class AuthorsTableModel extends AbstractTableModel {
 
     private final transient AuthorRepository authorRepository;
 
+    /**
+     * Creates a new {@link AuthorsTableModel}.
+     *
+     * @param authorRepository the repository to use for accessing authors
+     */
     public AuthorsTableModel(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
+    /**
+     * Adds a new author to the table.
+     *
+     * @param firstName the first name of the author
+     * @param lastName the last name of the author
+     * @param dateOfBirthString the date of birth of the author
+     */
     public void addAuthor(String firstName, String lastName, String dateOfBirthString) {
         LocalDate dateOfBirth = LocalDate.parse(dateOfBirthString);
         authorRepository.addAuthor(new Author(0, firstName, lastName, dateOfBirth, Set.of()));
         fireTableDataChanged();
     }
 
+    /**
+     * Removes an author from the table.
+     *
+     * @param id the ID of the author to remove
+     */
     public void removeAuthor(int id) {
         authorRepository.removeAuthor(id);
         fireTableDataChanged();

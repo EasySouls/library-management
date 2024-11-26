@@ -27,11 +27,13 @@ public interface MemberRepository {
      * Returns a member with the given email.
      * @param email the email of the member to return
      * @throws MemberNotFoundException if no member with the given email is found
+     * @return the member with the given email
      */
     Member findMemberByEmail(String email) throws MemberNotFoundException;
 
     /**
      * Returns a list of members with active loans.
+     * @return a list of members with active loans
      */
     List<Member> findMembersWithActiveLoans();
 
@@ -50,6 +52,7 @@ public interface MemberRepository {
 
     /**
      * Updates the member with the same id as the given member.
+     * @param member the member to update
      * @throws MemberNotFoundException if no member with the same id is found
      */
     void updateMember(Member member) throws MemberNotFoundException;

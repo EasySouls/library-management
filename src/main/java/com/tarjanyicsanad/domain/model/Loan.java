@@ -7,6 +7,11 @@ import java.time.LocalDate;
 
 /**
  * Represents a loan of a book to a member with details about the loan and return dates.
+ * @param id the unique identifier of the loan.
+ * @param book the book being loaned.
+ * @param member the member who loaned the book.
+ * @param loanedAt the date the book was loaned.
+ * @param returnDate the date the book is expected to be returned.
  */
 public record Loan(
         Integer id,
